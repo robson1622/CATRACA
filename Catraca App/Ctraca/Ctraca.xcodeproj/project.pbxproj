@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		977844EF2CD46868002A11C8 /* MapLibre in Frameworks */ = {isa = PBXBuildFile; productRef = 977844EE2CD46868002A11C8 /* MapLibre */; };
+		9778450D2CD58C11002A11C8 /* Mapbox in Frameworks */ = {isa = PBXBuildFile; productRef = 9778450C2CD58C11002A11C8 /* Mapbox */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,9 +33,22 @@
 		977844CE2CD27E6E002A11C8 /* CtracaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CtracaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9778450F2CD59040002A11C8 /* Exceptions for "Ctraca" folder in "Ctraca" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 977844B32CD27E6C002A11C8 /* Ctraca */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		977844B62CD27E6C002A11C8 /* Ctraca */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9778450F2CD59040002A11C8 /* Exceptions for "Ctraca" folder in "Ctraca" target */,
+			);
 			path = Ctraca;
 			sourceTree = "<group>";
 		};
@@ -56,7 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				977844EF2CD46868002A11C8 /* MapLibre in Frameworks */,
+				9778450D2CD58C11002A11C8 /* Mapbox in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +130,7 @@
 			);
 			name = Ctraca;
 			packageProductDependencies = (
-				977844EE2CD46868002A11C8 /* MapLibre */,
+				9778450C2CD58C11002A11C8 /* Mapbox */,
 			);
 			productName = Ctraca;
 			productReference = 977844B42CD27E6C002A11C8 /* Ctraca.app */;
@@ -408,6 +421,7 @@
 				DEVELOPMENT_TEAM = 7P8CW3852J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Ctraca/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -437,6 +451,7 @@
 				DEVELOPMENT_TEAM = 7P8CW3852J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Ctraca/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -574,16 +589,16 @@
 			repositoryURL = "https://github.com/maplibre/maplibre-gl-native-distribution.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 6.8.0;
+				minimumVersion = 5.11.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		977844EE2CD46868002A11C8 /* MapLibre */ = {
+		9778450C2CD58C11002A11C8 /* Mapbox */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 977844ED2CD46868002A11C8 /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
-			productName = MapLibre;
+			productName = Mapbox;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

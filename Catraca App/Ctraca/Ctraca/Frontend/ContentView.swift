@@ -4,10 +4,9 @@
 //
 //  Created by Robson Borges on 30/10/24.
 //
-
+import UIKit
 import SwiftUI
 import MapKit
-import MapLibreMaps 
 
 struct ContentView: View {
     // Variável de estado para controlar o ângulo de rotação
@@ -19,10 +18,13 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             VStack{
-                if showMap {
-                    map
-                        .ignoresSafeArea(.all)
-                }
+//                if showMap {
+//                    map
+//                        .ignoresSafeArea(.all)
+//                }
+                
+                MapView()
+                            .edgesIgnoringSafeArea(.all)
             }
             
             VStack {
@@ -106,35 +108,14 @@ struct ContentView: View {
     )
     var map : some View{
         VStack{
-            Map(coordinateRegion: $region)
         }
         
     }
 }
 
 
-struct MapLibreView: UIViewRepresentable {
-    func makeUIView(context: Context) -> MapView {
-        // Inicializando o MapView do MapLibre
-        let mapView = MapView(frame: .zero)
-        
-        // Defina a URL do estilo para o mapa OSM
-        mapView.styleURL = URL(string: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json")
-        
-        // Define uma região inicial com latitude e longitude e o nível de zoom
-        mapView.setCenter(CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194), zoomLevel: 10, animated: false)
-        
-        return mapView
-    }
 
-    func updateUIView(_ uiView: MapView, context: Context) {
-        // Atualizações do mapa podem ser configuradas aqui, se necessário
-    }
-    
-    static func dismantleUIView(_ uiView: MapView, coordinator: ()) {
-        // Libere recursos específicos aqui, se necessário, quando o MapView for destruído
-    }
-}
+
 
 #Preview {
     ContentView()
