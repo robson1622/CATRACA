@@ -11,29 +11,25 @@ import MapKit
 struct ContentView: View {
     // Variável de estado para controlar o ângulo de rotação
     @State private var rotationAngle: Double = 0
-    
+    @State private var initialLocationSet = false
     @State var inicialLocation : String = ""
     @State var finalLocation : String = ""
     
     var body: some View {
         ZStack {
             VStack{
-//                if showMap {
-//                    map
-//                        .ignoresSafeArea(.all)
-//                }
-                
-                MapView()
-                            .edgesIgnoringSafeArea(.all)
+                if showMap {
+                    MapView(initialLocationSet: $initialLocationSet)
+                        .edgesIgnoringSafeArea(.all)
+                }
             }
-            
             VStack {
                 picker
                     .padding(.top, 56)
+                    .shadow(radius: 10)
                 Spacer()
             }
             .padding(24)
-            
             VStack {
                 Spacer()
                 Button(action: {
@@ -80,6 +76,9 @@ struct ContentView: View {
         HStack{
             Button(action: {
                 showMap.toggle()
+                if showMap{
+                    initialLocationSet = false
+                }
             }) {
                 Text("Show Map")
                     .bold()
@@ -106,11 +105,6 @@ struct ContentView: View {
         center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
         span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
     )
-    var map : some View{
-        VStack{
-        }
-        
-    }
 }
 
 
