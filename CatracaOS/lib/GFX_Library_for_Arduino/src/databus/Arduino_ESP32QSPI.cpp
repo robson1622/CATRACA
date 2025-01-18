@@ -56,7 +56,6 @@ bool Arduino_ESP32QSPI::begin(int32_t speed, int8_t dataMode)
       .data7_io_num = -1,
       .max_transfer_sz = (ESP32QSPI_MAX_PIXELS_AT_ONCE * 16) + 8,
       .flags = SPICOMMON_BUSFLAG_MASTER | SPICOMMON_BUSFLAG_GPIO_PINS,
-      .isr_cpu_id = ESP_INTR_CPU_AFFINITY_AUTO,
       .intr_flags = 0};
   esp_err_t ret = spi_bus_initialize(ESP32QSPI_SPI_HOST, &buscfg, ESP32QSPI_DMA_CHANNEL);
   if (ret != ESP_OK)
@@ -70,7 +69,6 @@ bool Arduino_ESP32QSPI::begin(int32_t speed, int8_t dataMode)
       .address_bits = 24,
       .dummy_bits = 0,
       .mode = (uint8_t)_dataMode,
-      .clock_source = SPI_CLK_SRC_DEFAULT,
       .duty_cycle_pos = 0,
       .cs_ena_pretrans = 0,
       .cs_ena_posttrans = 0,
@@ -79,8 +77,7 @@ bool Arduino_ESP32QSPI::begin(int32_t speed, int8_t dataMode)
       .spics_io_num = -1, // avoid use system CS control
       .flags = SPI_DEVICE_HALFDUPLEX,
       .queue_size = 1,
-      .pre_cb = nullptr,
-      .post_cb = nullptr};
+      .pre_cb = nullptr};
   ret = spi_bus_add_device(ESP32QSPI_SPI_HOST, &devcfg, &_handle);
   if (ret != ESP_OK)
   {

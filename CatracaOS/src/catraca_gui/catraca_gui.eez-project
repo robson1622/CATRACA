@@ -89,7 +89,7 @@
           "template": "#if defined(EEZ_FOR_LVGL)\n#include <eez/core/vars.h>\n#endif\n\n#include \"ui.h\"\n#include \"screens.h\"\n#include \"images.h\"\n#include \"actions.h\"\n#include \"vars.h\"\n\n//${eez-studio GUI_ASSETS_DEF}\n\n//${eez-studio LVGL_NATIVE_VARS_TABLE_DEF}\n\n//${eez-studio LVGL_ACTIONS_ARRAY_DEF}\n\n#if defined(EEZ_FOR_LVGL)\n\nvoid ui_init() {\n    eez_flow_init(assets, sizeof(assets), (lv_obj_t **)&objects, sizeof(objects), images, sizeof(images), actions);\n}\n\nvoid ui_tick() {\n    eez_flow_tick();\n    tick_screen(g_currentScreen);\n}\n\n#else\n\n#include <string.h>\n\nstatic int16_t currentScreen = -1;\n\nstatic lv_obj_t *getLvglObjectFromIndex(int32_t index) {\n    if (index == -1) {\n        return 0;\n    }\n    return ((lv_obj_t **)&objects)[index];\n}\n\nvoid loadScreen(enum ScreensEnum screenId) {\n    currentScreen = screenId - 1;\n    lv_obj_t *screen = getLvglObjectFromIndex(currentScreen);\n    lv_scr_load_anim(screen, LV_SCR_LOAD_ANIM_FADE_IN, 200, 0, false);\n}\n\nvoid ui_init() {\n    create_screens();\n    loadScreen(SCREEN_ID_MAIN);\n}\n\nvoid ui_tick() {\n    tick_screen(currentScreen);\n}\n\n#endif\n"
         }
       ],
-      "destinationFolder": "src\\ui",
+      "destinationFolder": "..\\ui",
       "separateFolderForImagesAndFonts": false,
       "lvglInclude": "lvgl.h",
       "generateSourceCodeForEezFramework": false,
@@ -134,9 +134,9 @@
             {
               "objID": "6b272cb8-48b4-467f-c130-a1edc1f930b7",
               "type": "LVGLLabelWidget",
-              "left": 76,
-              "top": 25,
-              "width": 89,
+              "left": 59,
+              "top": 32,
+              "width": 123,
               "height": 16,
               "customInputs": [],
               "customOutputs": [],
@@ -163,22 +163,22 @@
                 "objID": "b70b99db-02c2-420a-cbdf-e6366dc84e67"
               },
               "groupIndex": 0,
-              "text": "Hello, world!",
+              "text": "Hello, CatracaOS!",
               "textType": "literal",
               "longMode": "WRAP",
               "recolor": false
             },
             {
-              "objID": "0636b5dc-2ecc-4666-f916-1548fe37443b",
-              "type": "LVGLSpinnerWidget",
-              "left": 83,
-              "top": 132,
-              "width": 80,
-              "height": 80,
+              "objID": "ed9f78e7-bef2-4ff0-b7f2-d223fad1d9a7",
+              "type": "LVGLArcWidget",
+              "left": 45,
+              "top": 143,
+              "width": 150,
+              "height": 150,
               "customInputs": [],
               "customOutputs": [],
               "style": {
-                "objID": "678cbf38-fc2e-465f-99c5-1113eabf3408",
+                "objID": "55f69483-3c01-4834-9cb1-7ba025499ea5",
                 "useStyle": "default",
                 "conditionalStyles": [],
                 "childStyles": []
@@ -192,6 +192,7 @@
               "children": [],
               "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
               "hiddenFlagType": "literal",
+              "clickableFlag": true,
               "clickableFlagType": "literal",
               "flagScrollbarMode": "",
               "flagScrollDirection": "",
@@ -201,52 +202,20 @@
               "disabledStateType": "literal",
               "states": "",
               "localStyles": {
-                "objID": "648a402c-3f47-428d-ede8-3d14bb638633"
-              },
-              "group": "",
-              "groupIndex": 0
-            },
-            {
-              "objID": "2d7194c0-bfca-4054-937c-d61e4f9c7572",
-              "type": "LVGLLabelWidget",
-              "left": 85,
-              "top": 88,
-              "width": 75,
-              "height": 16,
-              "customInputs": [],
-              "customOutputs": [],
-              "style": {
-                "objID": "86388744-9033-4cb5-c7a1-aeed50efa5ec",
-                "useStyle": "default",
-                "conditionalStyles": [],
-                "childStyles": []
-              },
-              "timeline": [],
-              "eventHandlers": [],
-              "leftUnit": "px",
-              "topUnit": "px",
-              "widthUnit": "content",
-              "heightUnit": "content",
-              "children": [],
-              "widgetFlags": "CLICK_FOCUSABLE|GESTURE_BUBBLE|PRESS_LOCK|SCROLLABLE|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_WITH_ARROW|SNAPPABLE",
-              "hiddenFlagType": "literal",
-              "clickableFlagType": "literal",
-              "flagScrollbarMode": "",
-              "flagScrollDirection": "",
-              "scrollSnapX": "",
-              "scrollSnapY": "",
-              "checkedStateType": "literal",
-              "disabledStateType": "literal",
-              "states": "",
-              "localStyles": {
-                "objID": "24e13d35-ec5e-48d9-bc4b-b436ec0d4f2c"
+                "objID": "a4a07aea-5ff9-462f-eeae-1fa0bf688704"
               },
               "group": "",
               "groupIndex": 0,
-              "text": "CatracaOS",
-              "textType": "literal",
-              "longMode": "WRAP",
-              "recolor": false
+              "rangeMin": 0,
+              "rangeMinType": "literal",
+              "rangeMax": 100,
+              "rangeMaxType": "literal",
+              "value": 25,
+              "valueType": "literal",
+              "bgStartAngle": 120,
+              "bgEndAngle": 60,
+              "mode": "NORMAL",
+              "rotation": 0
             }
           ],
           "widgetFlags": "CLICKABLE|PRESS_LOCK|CLICK_FOCUSABLE|GESTURE_BUBBLE|SNAPPABLE|SCROLLABLE|SCROLL_ELASTIC|SCROLL_MOMENTUM|SCROLL_CHAIN_HOR|SCROLL_CHAIN_VER",

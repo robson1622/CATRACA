@@ -1,15 +1,27 @@
 #include <lvgl.h>
-#include <ui.h>
+#include "ui/ui.h"
 #include <Arduino_GFX_Library.h>
-
-//#include "TouchScreen.h"
+#include <TAMC_GT911.h>
 
 #define TFT_BL 27
 #define GFX_BL DF_GFX_BL // Default backlight pin
 
+// Setup touch
+#define TOUCH_GT911
+#define TOUCH_GT911_SCL 32
+#define TOUCH_GT911_SDA 33
+#define TOUCH_GT911_INT -1
+#define TOUCH_GT911_RST 25
+#define TOUCH_GT911_ROTATION ROTATION_LEFT  //ROTATION_NORMAL
+#define TOUCH_MAP_X1 320
+#define TOUCH_MAP_X2 0
+#define TOUCH_MAP_Y1 240
+#define TOUCH_MAP_Y2 0
+
 // Display initialization
 Arduino_DataBus *bus = new Arduino_ESP32SPI(2 /* DC */, 15 /* CS */, 14 /* SCK */, 13 /* MOSI */, GFX_NOT_DEFINED /* MISO */);
-Arduino_GFX *gfx = new Arduino_ST7789(bus, -1 /* RST */, 0 /* rotation */, true /* IPS */);
+Arduino_GFX *gfx = new Arduino_ST7789(bus, -1 /* RST */, ROTATION_LEFT /* rotation */, true /* IPS */);
+TAMC_GT911 ts = TAMC_GT911(TOUCH_GT911_SDA, TOUCH_GT911_SCL, TOUCH_GT911_INT, TOUCH_GT911_RST, max(TOUCH_MAP_X1, TOUCH_MAP_X2), max(TOUCH_MAP_Y1, TOUCH_MAP_Y2));
 
 static lv_disp_draw_buf_t draw_buf;
 static lv_color_t *disp_draw_buf;
@@ -27,42 +39,19 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 
   lv_disp_flush_ready(disp);
 }
-/*
-void my_touchpad_read(lv_indev_drv_t * indev_driver, lv_indev_data_t * data)
-{
-  // TODO: Replace with your custom touch-screen handling logic!
 
-  TSPoint p = ts.getPoint();
-  touched = (p.z > 375 && p.z < 415);
-
-  float x = 1.0f * p.x - 200.0f;
-  float y = 1.0f * p.y - 135.0f;
-  x = (x / 685.0f) * 240.0f;
-  y = (y / 735.0f) * 320.0f;
-
-  x = (x - 480.0f) * -1.0f - 240;
-  y = (y - 640.0f) * -1.0f - 320;
-
-  if(touched && !coordinatesSet)
-  {
+void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
+  ts.read();
+  if (ts.isTouched) {
     data->state = LV_INDEV_STATE_PR;
-
-    
-    data->point.x = x;
-    data->point.y = y;
-
-    coordinatesSet = true; 
-  }
-  
-  if (!touched)
-  {
+    data->point.x = ts.points[0].x;
+    data->point.y = ts.points[0].y;
+  } else {
     data->state = LV_INDEV_STATE_REL;
-    coordinatesSet = false;
   }
-}*/
+}
 
-void setup()
-{
+void setup() {
   // Initialize display
   gfx->begin();
   gfx->fillScreen(BLACK);
@@ -70,6 +59,9 @@ void setup()
   pinMode(TFT_BL, OUTPUT);
   digitalWrite(TFT_BL, HIGH);
 #endif
+
+  ts.begin();
+  ts.setRotation(1);
 
   lv_init();
 
@@ -83,14 +75,13 @@ void setup()
   disp_drv.draw_buf = &draw_buf;
   lv_disp_drv_register(&disp_drv);
 
-/*
   // Register the custom touch-input handler
   static lv_indev_drv_t indev_drv;
-  lv_indev_drv_init( &indev_drv );
+  lv_indev_drv_init(&indev_drv);
   indev_drv.type = LV_INDEV_TYPE_POINTER;
   indev_drv.read_cb = my_touchpad_read;
-  lv_indev_drv_register( &indev_drv );
-*/
+  lv_indev_drv_register(&indev_drv);
+
   // Init EEZ-Studio UI
   ui_init();
 }
