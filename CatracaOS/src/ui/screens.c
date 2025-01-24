@@ -22,16 +22,15 @@ void create_screen_main() {
         lv_obj_t *parent_obj = obj;
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 59, 32);
+            lv_obj_set_pos(obj, 0, 11);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "Hello, CatracaOS!");
+            lv_label_set_text(obj, "Latitude:");
         }
         {
-            lv_obj_t *obj = lv_arc_create(parent_obj);
-            lv_obj_set_pos(obj, 45, 143);
-            lv_obj_set_size(obj, 150, 150);
-            lv_arc_set_value(obj, 25);
-            lv_arc_set_bg_end_angle(obj, 60);
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 0, 35);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Longitude:");
         }
     }
 }
