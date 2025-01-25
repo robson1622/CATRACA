@@ -22,8 +22,9 @@ void create_screen_main() {
         lv_obj_t *parent_obj = obj;
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            lv_obj_set_pos(obj, 37, 240);
-            lv_obj_set_size(obj, 167, 70);
+            lv_obj_set_pos(obj, 41, 257);
+            lv_obj_set_size(obj, 157, 60);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE|LV_OBJ_FLAG_CLICK_FOCUSABLE|LV_OBJ_FLAG_GESTURE_BUBBLE|LV_OBJ_FLAG_PRESS_LOCK|LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_CHAIN_VER|LV_OBJ_FLAG_SCROLL_MOMENTUM|LV_OBJ_FLAG_SCROLL_WITH_ARROW|LV_OBJ_FLAG_SNAPPABLE);
             lv_obj_set_style_arc_rounded(obj, true, LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
@@ -31,7 +32,7 @@ void create_screen_main() {
                     // SettingsScreenBtn
                     lv_obj_t *obj = lv_btn_create(parent_obj);
                     objects.settings_screen_btn = obj;
-                    lv_obj_set_pos(obj, 97, 0);
+                    lv_obj_set_pos(obj, 92, -5);
                     lv_obj_set_size(obj, 40, 40);
                     lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -49,7 +50,7 @@ void create_screen_main() {
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
                     objects.obj0 = obj;
-                    lv_obj_set_pos(obj, 49, 0);
+                    lv_obj_set_pos(obj, 44, -5);
                     lv_obj_set_size(obj, 40, 40);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
                     {
@@ -69,7 +70,7 @@ void create_screen_main() {
                     // a
                     lv_obj_t *obj = lv_btn_create(parent_obj);
                     objects.a = obj;
-                    lv_obj_set_pos(obj, 0, 0);
+                    lv_obj_set_pos(obj, -4, -5);
                     lv_obj_set_size(obj, 40, 40);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
                     {
@@ -105,13 +106,13 @@ void create_screen_main() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 9);
+            create_user_widget_header(obj, 10);
         }
     }
 }
 
 void tick_screen_main() {
-    tick_user_widget_header(9);
+    tick_user_widget_header(10);
 }
 
 void create_screen_load_screen() {
@@ -164,19 +165,20 @@ void create_screen_settings_screen() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 14);
+            create_user_widget_header(obj, 15);
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            lv_obj_set_pos(obj, 86, 240);
-            lv_obj_set_size(obj, 70, 70);
+            lv_obj_set_pos(obj, 90, 257);
+            lv_obj_set_size(obj, 60, 60);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICK_FOCUSABLE|LV_OBJ_FLAG_GESTURE_BUBBLE|LV_OBJ_FLAG_PRESS_LOCK|LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_CHAIN_HOR|LV_OBJ_FLAG_SCROLL_CHAIN_VER|LV_OBJ_FLAG_SCROLL_ELASTIC|LV_OBJ_FLAG_SCROLL_MOMENTUM|LV_OBJ_FLAG_SCROLL_WITH_ARROW|LV_OBJ_FLAG_SNAPPABLE);
             {
                 lv_obj_t *parent_obj = obj;
                 {
-                    // BackSettingsScreenBtn
+                    // BackSettingsMainBtn
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.back_settings_screen_btn = obj;
-                    lv_obj_set_pos(obj, 0, 0);
+                    objects.back_settings_main_btn = obj;
+                    lv_obj_set_pos(obj, -5, -5);
                     lv_obj_set_size(obj, 40, 40);
                     lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
                     lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -195,65 +197,52 @@ void create_screen_settings_screen() {
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 84, 30);
+            lv_obj_set_pos(obj, 84, 22);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Settings");
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
         }
         {
-            // bluetooth_panel
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.bluetooth_panel = obj;
-            lv_obj_set_pos(obj, 10, 62);
-            lv_obj_set_size(obj, 223, 53);
-            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_ELASTIC|LV_OBJ_FLAG_SCROLL_MOMENTUM);
+            lv_obj_set_pos(obj, 5, 47);
+            lv_obj_set_size(obj, 230, 205);
             {
                 lv_obj_t *parent_obj = obj;
                 {
-                    lv_obj_t *obj = lv_label_create(parent_obj);
-                    lv_obj_set_pos(obj, -5, 2);
-                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "Bluetooth");
-                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
-                }
-                {
-                    // bluetooth_swtich
-                    lv_obj_t *obj = lv_switch_create(parent_obj);
-                    objects.bluetooth_swtich = obj;
-                    lv_obj_set_pos(obj, 149, -1);
-                    lv_obj_set_size(obj, 50, 25);
-                    lv_obj_add_state(obj, LV_STATE_CHECKED);
-                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_SCROLLED);
-                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_EDITED);
-                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_FOCUS_KEY);
-                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_CHECKED);
-                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_CHECKED);
-                }
-            }
-        }
-        {
-            // bluetooth_panel_1
-            lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.bluetooth_panel_1 = obj;
-            lv_obj_set_pos(obj, 10, 134);
-            lv_obj_set_size(obj, 223, 53);
-            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_ELASTIC);
-            {
-                lv_obj_t *parent_obj = obj;
-                {
-                    lv_obj_t *obj = lv_label_create(parent_obj);
-                    lv_obj_set_pos(obj, -5, 2);
-                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "Load Map");
-                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
-                }
-                {
-                    lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj3 = obj;
-                    lv_obj_set_pos(obj, 155, -8);
-                    lv_obj_set_size(obj, 38, 38);
-                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    // bluetooth_panel_1
+                    lv_obj_t *obj = lv_obj_create(parent_obj);
+                    objects.bluetooth_panel_1 = obj;
+                    lv_obj_set_pos(obj, -9, -4);
+                    lv_obj_set_size(obj, 209, 53);
+                    lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_ELASTIC);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            lv_obj_set_pos(obj, -5, 2);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_label_set_text(obj, "Bluetooth Settings");
+                            lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+                        }
+                        {
+                            // Bluetooth_settings_btn
+                            lv_obj_t *obj = lv_btn_create(parent_obj);
+                            objects.bluetooth_settings_btn = obj;
+                            lv_obj_set_pos(obj, 149, -7);
+                            lv_obj_set_size(obj, 38, 38);
+                            lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
+                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
+                            {
+                                lv_obj_t *parent_obj = obj;
+                                {
+                                    lv_obj_t *obj = lv_label_create(parent_obj);
+                                    lv_obj_set_pos(obj, 2, 3);
+                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                    lv_label_set_text(obj, ">");
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -261,7 +250,158 @@ void create_screen_settings_screen() {
 }
 
 void tick_screen_settings_screen() {
-    tick_user_widget_header(14);
+    tick_user_widget_header(15);
+}
+
+void create_screen_bluetooth_settings_screen_() {
+    lv_obj_t *obj = lv_obj_create(0);
+    objects.bluetooth_settings_screen_ = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 240, 320);
+    {
+        lv_obj_t *parent_obj = obj;
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.obj3 = obj;
+            lv_obj_set_pos(obj, 0, 0);
+            lv_obj_set_size(obj, 240, 320);
+            lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+            create_user_widget_header(obj, 22);
+        }
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 90, 257);
+            lv_obj_set_size(obj, 60, 60);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICK_FOCUSABLE|LV_OBJ_FLAG_GESTURE_BUBBLE|LV_OBJ_FLAG_PRESS_LOCK|LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_CHAIN_HOR|LV_OBJ_FLAG_SCROLL_CHAIN_VER|LV_OBJ_FLAG_SCROLL_ELASTIC|LV_OBJ_FLAG_SCROLL_MOMENTUM|LV_OBJ_FLAG_SCROLL_WITH_ARROW|LV_OBJ_FLAG_SNAPPABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // BackSettingsScreenBtn
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.back_settings_screen_btn = obj;
+                    lv_obj_set_pos(obj, -5, -5);
+                    lv_obj_set_size(obj, 40, 40);
+                    lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            lv_obj_set_pos(obj, 1, 2);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_label_set_text(obj, "<");
+                            lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+                        }
+                    }
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 76, 22);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Bluetooth");
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // bt_settings_panel
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.bt_settings_panel = obj;
+            lv_obj_set_pos(obj, 5, 47);
+            lv_obj_set_size(obj, 230, 205);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICK_FOCUSABLE|LV_OBJ_FLAG_SCROLL_CHAIN_VER|LV_OBJ_FLAG_SCROLL_ELASTIC);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // bluetooth_name_panel_3
+                    lv_obj_t *obj = lv_obj_create(parent_obj);
+                    objects.bluetooth_name_panel_3 = obj;
+                    lv_obj_set_pos(obj, -8, 61);
+                    lv_obj_set_size(obj, 208, 53);
+                    lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_ELASTIC|LV_OBJ_FLAG_SCROLL_MOMENTUM);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            lv_obj_set_pos(obj, -5, 4);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_label_set_text(obj, "Name");
+                            lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+                        }
+                    }
+                }
+                {
+                    // bluetooth_panel_2
+                    lv_obj_t *obj = lv_obj_create(parent_obj);
+                    objects.bluetooth_panel_2 = obj;
+                    lv_obj_set_pos(obj, -8, -4);
+                    lv_obj_set_size(obj, 208, 53);
+                    lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_ELASTIC|LV_OBJ_FLAG_SCROLL_MOMENTUM);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            lv_obj_set_pos(obj, -5, 4);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_label_set_text(obj, "Bluetooth");
+                            lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+                        }
+                        {
+                            // bluetooth_swtich_1
+                            lv_obj_t *obj = lv_switch_create(parent_obj);
+                            objects.bluetooth_swtich_1 = obj;
+                            lv_obj_set_pos(obj, 131, -1);
+                            lv_obj_set_size(obj, 50, 25);
+                            lv_obj_add_state(obj, LV_STATE_CHECKED);
+                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_SCROLLED);
+                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_EDITED);
+                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_FOCUS_KEY);
+                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_CHECKED);
+                            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_CHECKED);
+                        }
+                    }
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_btn_create(parent_obj);
+            objects.obj4 = obj;
+            lv_obj_set_pos(obj, 91, 133);
+            lv_obj_set_size(obj, 118, 34);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xffe2e2e2), LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // bluetooth_name_label
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.bluetooth_name_label = obj;
+                    lv_obj_set_pos(obj, 0, 0);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "\"catracaNav\"");
+                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_text_color(obj, lv_color_hex(0xff131313), LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_keyboard_create(parent_obj);
+            lv_obj_set_pos(obj, 0, 188);
+            lv_obj_set_size(obj, 240, 132);
+            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+            lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+    }
+}
+
+void tick_screen_bluetooth_settings_screen_() {
+    tick_user_widget_header(22);
 }
 
 void create_user_widget_header(lv_obj_t *parent_obj, int startWidgetIndex) {
@@ -307,6 +447,7 @@ void create_screens() {
     create_screen_main();
     create_screen_load_screen();
     create_screen_settings_screen();
+    create_screen_bluetooth_settings_screen_();
 }
 
 typedef void (*tick_screen_func_t)();
@@ -315,6 +456,7 @@ tick_screen_func_t tick_screen_funcs[] = {
     tick_screen_main,
     tick_screen_load_screen,
     tick_screen_settings_screen,
+    tick_screen_bluetooth_settings_screen_,
     0,
 };
 

@@ -99,10 +99,15 @@ void loop() {
     Serial.printf("Event handled:  %u\n", obj);
     g_eez_event_handled = false;
 
+
     if(obj == objects.settings_screen_btn)
       lv_scr_load(objects.settings_screen);
-    else if(obj == objects.back_settings_screen_btn)
+    else if(obj == objects.back_settings_main_btn)
       lv_scr_load(objects.main);
+    else if(obj == objects.bluetooth_settings_btn)
+      lv_scr_load(objects.bluetooth_settings_screen_);
+    else if (obj == objects.back_settings_screen_btn)
+      lv_scr_load(objects.settings_screen);
   }
 
 }
