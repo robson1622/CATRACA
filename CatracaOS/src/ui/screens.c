@@ -106,45 +106,13 @@ void create_screen_main() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 10);
+            create_user_widget_header(obj, 9);
         }
     }
 }
 
 void tick_screen_main() {
-    tick_user_widget_header(10);
-}
-
-void create_screen_load_screen() {
-    lv_obj_t *obj = lv_obj_create(0);
-    objects.load_screen = obj;
-    lv_obj_set_pos(obj, 0, 0);
-    lv_obj_set_size(obj, 240, 320);
-    {
-        lv_obj_t *parent_obj = obj;
-        {
-            lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 61, 120);
-            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "CatracaOS");
-            lv_obj_set_style_text_font(obj, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
-        }
-        {
-            // load_bar
-            lv_obj_t *obj = lv_bar_create(parent_obj);
-            objects.load_bar = obj;
-            lv_obj_set_pos(obj, 46, 160);
-            lv_obj_set_size(obj, 150, 10);
-            lv_bar_set_value(obj, 25, LV_ANIM_OFF);
-            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff88ba90), LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_text_color(obj, lv_color_hex(0xff2196f3), LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_opa(obj, 51, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_DEFAULT);
-        }
-    }
-}
-
-void tick_screen_load_screen() {
+    tick_user_widget_header(9);
 }
 
 void create_screen_settings_screen() {
@@ -165,7 +133,7 @@ void create_screen_settings_screen() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 15);
+            create_user_widget_header(obj, 13);
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -250,7 +218,7 @@ void create_screen_settings_screen() {
 }
 
 void tick_screen_settings_screen() {
-    tick_user_widget_header(15);
+    tick_user_widget_header(13);
 }
 
 void create_screen_bluetooth_settings_screen_() {
@@ -271,7 +239,7 @@ void create_screen_bluetooth_settings_screen_() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 22);
+            create_user_widget_header(obj, 20);
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -321,7 +289,7 @@ void create_screen_bluetooth_settings_screen_() {
                     // bluetooth_name_panel_3
                     lv_obj_t *obj = lv_obj_create(parent_obj);
                     objects.bluetooth_name_panel_3 = obj;
-                    lv_obj_set_pos(obj, -8, 61);
+                    lv_obj_set_pos(obj, -8, -3);
                     lv_obj_set_size(obj, 208, 53);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_ELASTIC|LV_OBJ_FLAG_SCROLL_MOMENTUM);
                     {
@@ -330,7 +298,14 @@ void create_screen_bluetooth_settings_screen_() {
                             lv_obj_t *obj = lv_label_create(parent_obj);
                             lv_obj_set_pos(obj, -5, 4);
                             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                            lv_label_set_text(obj, "Name");
+                            lv_label_set_text(obj, "Device Name:");
+                            lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+                        }
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            lv_obj_set_pos(obj, 105, 4);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_label_set_text(obj, "CATRACA");
                             lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
                         }
                     }
@@ -339,7 +314,7 @@ void create_screen_bluetooth_settings_screen_() {
                     // bluetooth_panel_2
                     lv_obj_t *obj = lv_obj_create(parent_obj);
                     objects.bluetooth_panel_2 = obj;
-                    lv_obj_set_pos(obj, -8, -4);
+                    lv_obj_set_pos(obj, -8, 61);
                     lv_obj_set_size(obj, 208, 53);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_ELASTIC|LV_OBJ_FLAG_SCROLL_MOMENTUM);
                     {
@@ -369,39 +344,11 @@ void create_screen_bluetooth_settings_screen_() {
                 }
             }
         }
-        {
-            lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj4 = obj;
-            lv_obj_set_pos(obj, 91, 133);
-            lv_obj_set_size(obj, 118, 34);
-            lv_obj_set_style_bg_color(obj, lv_color_hex(0xffe2e2e2), LV_PART_MAIN | LV_STATE_DEFAULT);
-            {
-                lv_obj_t *parent_obj = obj;
-                {
-                    // bluetooth_name_label
-                    lv_obj_t *obj = lv_label_create(parent_obj);
-                    objects.bluetooth_name_label = obj;
-                    lv_obj_set_pos(obj, 0, 0);
-                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "\"catracaNav\"");
-                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-                    lv_obj_set_style_text_color(obj, lv_color_hex(0xff131313), LV_PART_MAIN | LV_STATE_DEFAULT);
-                }
-            }
-        }
-        {
-            lv_obj_t *obj = lv_keyboard_create(parent_obj);
-            lv_obj_set_pos(obj, 0, 188);
-            lv_obj_set_size(obj, 240, 132);
-            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
-            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
-            lv_obj_set_style_align(obj, LV_ALIGN_DEFAULT, LV_PART_MAIN | LV_STATE_DEFAULT);
-        }
     }
 }
 
 void tick_screen_bluetooth_settings_screen_() {
-    tick_user_widget_header(22);
+    tick_user_widget_header(20);
 }
 
 void create_user_widget_header(lv_obj_t *parent_obj, int startWidgetIndex) {
@@ -445,7 +392,6 @@ void create_screens() {
     lv_disp_set_theme(dispp, theme);
     
     create_screen_main();
-    create_screen_load_screen();
     create_screen_settings_screen();
     create_screen_bluetooth_settings_screen_();
 }
@@ -454,7 +400,6 @@ typedef void (*tick_screen_func_t)();
 
 tick_screen_func_t tick_screen_funcs[] = {
     tick_screen_main,
-    tick_screen_load_screen,
     tick_screen_settings_screen,
     tick_screen_bluetooth_settings_screen_,
     0,

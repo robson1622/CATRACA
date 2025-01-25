@@ -2,6 +2,7 @@
 #include "ui/ui.h"
 #include <Arduino_GFX_Library.h>
 #include <TAMC_GT911.h>
+//#include "BluetoothInterface.h"
 
 #define TFT_BL 27
 #define GFX_BL DF_GFX_BL // Default backlight pin
@@ -29,6 +30,8 @@ static lv_disp_drv_t disp_drv;
 
 extern lv_event_t g_eez_event;
 extern bool g_eez_event_handled;
+
+//BluetoothInterface bt;
 
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
@@ -66,6 +69,9 @@ void setup() {
   ts.begin();
   ts.setRotation(1);
 
+  // Initialize Bluetooth
+ // bt.begin("CatracaOS");
+
   lv_init();
 
   disp_draw_buf = (lv_color_t *)malloc(sizeof(lv_color_t) * gfx->width() * gfx->height() / 2);
@@ -93,6 +99,9 @@ void loop() {
   lv_timer_handler();
   // Update EEZ-Studio UI
   ui_tick();
+
+  //bt.loop();
+  //bt.processReceivedMessage();
 
   if(g_eez_event_handled) {
     lv_obj_t * obj = lv_event_get_target(&g_eez_event);
