@@ -186,7 +186,7 @@
             {
               "type": "tabset",
               "id": "EDITORS",
-              "weight": 65,
+              "weight": 58.90107326178255,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
@@ -207,12 +207,12 @@
             {
               "type": "row",
               "id": "#dce9069e-a58d-419c-92ec-c87f59ee756a",
-              "weight": 20,
+              "weight": 26.098926738217454,
               "children": [
                 {
                   "type": "tabset",
                   "id": "#14097884-232c-4d5f-8dac-73238c0d3424",
-                  "weight": 2,
+                  "weight": 2.0479041916167664,
                   "children": [
                     {
                       "type": "tab",
@@ -227,7 +227,7 @@
                 {
                   "type": "tabset",
                   "id": "#466ac938-823b-4f49-bc76-a14bf3c85132",
-                  "weight": 1,
+                  "weight": 0.9520958083832335,
                   "children": [
                     {
                       "type": "tab",

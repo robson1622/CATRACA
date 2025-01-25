@@ -27,6 +27,9 @@ static lv_disp_draw_buf_t draw_buf;
 static lv_color_t *disp_draw_buf;
 static lv_disp_drv_t disp_drv;
 
+extern lv_event_t g_eez_event;
+extern bool g_eez_event_handled;
+
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
   uint32_t h = (area->y2 - area->y1 + 1);
@@ -90,4 +93,16 @@ void loop() {
   lv_timer_handler();
   // Update EEZ-Studio UI
   ui_tick();
+
+  if(g_eez_event_handled) {
+    lv_obj_t * obj = lv_event_get_target(&g_eez_event);
+    Serial.printf("Event handled:  %u\n", obj);
+    g_eez_event_handled = false;
+
+    if(obj == objects.settings_screen_btn)
+      lv_scr_load(objects.settings_screen);
+    else if(obj == objects.back_settings_screen_btn)
+      lv_scr_load(objects.main);
+  }
+
 }
