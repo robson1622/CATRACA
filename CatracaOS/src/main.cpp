@@ -3,6 +3,7 @@
 #include <Arduino_GFX_Library.h>
 #include <TAMC_GT911.h>
 //#include "BluetoothInterface.h"
+#include "SDInterface.h"
 
 #define TFT_BL 27
 #define GFX_BL DF_GFX_BL // Default backlight pin
@@ -32,6 +33,7 @@ extern lv_event_t g_eez_event;
 extern bool g_eez_event_handled;
 
 //BluetoothInterface bt;
+SDInterface sd(SD_CS);
 
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
@@ -93,6 +95,15 @@ void setup() {
 
   // Init EEZ-Studio UI
   ui_init();
+
+    Serial.begin(115200);
+
+  // Initialize the SD card
+  if (!sd.begin()) {
+    Serial.println("SD Card initialization failed!");
+    return;
+  }
+  Serial.println("SD Card initialized.");
 }
 
 void loop() {
@@ -108,15 +119,44 @@ void loop() {
     Serial.printf("Event handled:  %u\n", obj);
     g_eez_event_handled = false;
 
-
-    if(obj == objects.settings_screen_btn)
+    if (obj == objects.settings_screen_btn) {
       lv_scr_load(objects.settings_screen);
-    else if(obj == objects.back_settings_main_btn)
+    } else if (obj == objects.back_settings_main_btn) {
       lv_scr_load(objects.main);
-    else if(obj == objects.bluetooth_settings_btn)
+    } else if (obj == objects.bluetooth_settings_btn) {
       lv_scr_load(objects.bluetooth_settings_screen_);
-    else if (obj == objects.back_settings_screen_btn)
+    } else if (obj == objects.back_settings_screen_btn) {
       lv_scr_load(objects.settings_screen);
-  }
+    } else if (obj == objects.sd_card_settings_btn) {
+      lv_scr_load(objects.sd_card_settings_screen);
+      String files = sd.listDirToString("/", 0);
+      String test_file = sd.readFileToString("/testeleituras.txt");
 
+      uint64_t total_sd = 0;
+      uint64_t used_sd = 0;
+      sd.getCardInfo(total_sd, used_sd);
+      lv_bar_set_range(objects.sd_bar, 0, total_sd);
+      lv_bar_set_value(objects.sd_bar, used_sd, LV_ANIM_ON);
+
+      float total_sd_gb = total_sd / (1024.0 * 1024.0 * 1024.0);
+      float used_sd_gb = used_sd / (1024.0 * 1024.0 * 1024.0);
+      float usage_sd = (used_sd_gb * 100.0) / total_sd_gb;
+
+      char used_sd_str[10];
+      char total_sd_str[10];
+      char usage_sd_str[10];
+
+      snprintf(used_sd_str, sizeof(used_sd_str), "%.2f GB", used_sd_gb);
+      snprintf(total_sd_str, sizeof(total_sd_str), "%.2f GB", total_sd_gb);
+      snprintf(usage_sd_str, sizeof(usage_sd_str), "%.1f %%", usage_sd);
+
+      lv_label_set_text(objects.used_sd_info, used_sd_str);
+      lv_label_set_text(objects.total_sd_info, total_sd_str);
+      lv_label_set_text(objects.percentage_sd_info, usage_sd_str);
+
+      lv_label_set_text(objects.files_label, files.c_str());
+    } else if (obj == objects.back_settings_screen_btn_1) {
+      lv_scr_load(objects.settings_screen);
+    }
+  }
 }

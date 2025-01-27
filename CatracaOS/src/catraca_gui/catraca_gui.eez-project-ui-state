@@ -1,6 +1,9 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[catraca_gui.eez-project]:/userPages/0",
+    "selectedUserPageObject": "[catraca_gui.eez-project]:/userPages/3",
+    "selectedUserWidgetObject": "[catraca_gui.eez-project]:/userWidgets/0",
+    "selectedActionObject": "[catraca_gui.eez-project]:/actions/0",
+    "selectedBitmapObject": "[catraca_gui.eez-project]:/bitmaps/1",
     "subnavigationSelectedItems": {}
   },
   "layoutModel": {
@@ -21,6 +24,7 @@
           },
           {
             "type": "border",
+            "selected": 2,
             "size": 240,
             "location": "right",
             "children": [
@@ -115,12 +119,12 @@
             {
               "type": "row",
               "id": "#7e8ff713-60b0-4e49-9d4b-0d10943419c9",
-              "weight": 15,
+              "weight": 16.38125066179622,
               "children": [
                 {
                   "type": "tabset",
                   "id": "#55b7552c-a2fb-45fd-a997-f415d8be3967",
-                  "weight": 1,
+                  "weight": 0.9887133182844243,
                   "enableClose": false,
                   "children": [
                     {
@@ -152,7 +156,7 @@
                 {
                   "type": "tabset",
                   "id": "#857a8afc-9c31-4453-871f-71bedf6aac90",
-                  "weight": 1,
+                  "weight": 1.0112866817155757,
                   "enableClose": false,
                   "children": [
                     {
@@ -186,33 +190,55 @@
             {
               "type": "tabset",
               "id": "EDITORS",
-              "weight": 58.90107326178255,
+              "weight": 52.744809850411094,
+              "selected": 2,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
                 {
                   "type": "tab",
-                  "id": "#586509b3-f4d3-4a27-87c6-39b04535588f",
-                  "name": "Main",
+                  "id": "#fe87061a-a6f8-4d73-be77-fd8147fed4e7",
+                  "name": "SettingsScreen",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[catraca_gui.eez-project]:/userPages/0",
-                    "permanent": false
+                    "objectPath": "[catraca_gui.eez-project]:/userPages/1",
+                    "permanent": true
+                  },
+                  "icon": "svg:page"
+                },
+                {
+                  "type": "tab",
+                  "id": "#2b38cd9c-c37b-40b5-ac0f-87764c3147bb",
+                  "name": "BluetoothSettingsScreen ",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[catraca_gui.eez-project]:/userPages/2",
+                    "permanent": true
+                  },
+                  "icon": "svg:page"
+                },
+                {
+                  "type": "tab",
+                  "id": "#2dfcc791-2ff6-4a82-ba87-8ab7f1d0d716",
+                  "name": "SDCardSettingsScreen",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[catraca_gui.eez-project]:/userPages/3",
+                    "permanent": true
                   },
                   "icon": "svg:page"
                 }
-              ],
-              "active": true
+              ]
             },
             {
               "type": "row",
               "id": "#dce9069e-a58d-419c-92ec-c87f59ee756a",
-              "weight": 26.098926738217454,
+              "weight": 30.873939487792676,
               "children": [
                 {
                   "type": "tabset",
                   "id": "#14097884-232c-4d5f-8dac-73238c0d3424",
-                  "weight": 2.0479041916167664,
+                  "weight": 2.1332335329341316,
                   "children": [
                     {
                       "type": "tab",
@@ -222,12 +248,13 @@
                       "enableClose": false,
                       "icon": "svg:properties"
                     }
-                  ]
+                  ],
+                  "active": true
                 },
                 {
                   "type": "tabset",
                   "id": "#466ac938-823b-4f49-bc76-a14bf3c85132",
-                  "weight": 0.9520958083832335,
+                  "weight": 0.8667664670658682,
                   "children": [
                     {
                       "type": "tab",
@@ -531,7 +558,8 @@
                       "component": "bitmaps",
                       "enableClose": false
                     }
-                  ]
+                  ],
+                  "active": true
                 },
                 {
                   "type": "tabset",
@@ -969,14 +997,128 @@
   "objects": {
     "[catraca_gui.eez-project]:/userPages/0[flow-state]": {
       "selection": {
-        "0": {}
+        "0": {
+          "0": {
+            "1": {},
+            "2": {}
+          }
+        }
       },
       "transform": {
         "translate": {
-          "x": -411.20000000000005,
-          "y": -209.20000000000005
+          "x": -293.0233333333335,
+          "y": -226.7022916666667
         },
-        "scale": 1
+        "scale": 1.25
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[catraca_gui.eez-project]:/userWidgets/0[flow-state]": {
+      "selection": {},
+      "transform": {
+        "translate": {
+          "x": -120,
+          "y": -160
+        },
+        "scale": 1.25
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[catraca_gui.eez-project]:/userPages/1[flow-state]": {
+      "selection": {
+        "0": {
+          "3": {
+            "0": {
+              "1": {}
+            }
+          },
+          "4": {}
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -139,
+          "y": -155
+        },
+        "scale": 1.25
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[catraca_gui.eez-project]:/userPages/2[flow-state]": {
+      "selection": {
+        "0": {
+          "1": {},
+          "3": {
+            "0": {}
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -120,
+          "y": -160
+        },
+        "scale": 1.25
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[catraca_gui.eez-project]:/userPages/3[flow-state]": {
+      "selection": {
+        "0": {
+          "1": {},
+          "3": {},
+          "4": {
+            "$selected": true
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -120,
+          "y": -160
+        },
+        "scale": 1.25
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[catraca_gui.eez-project]:/userPages/-1[flow-state]": {
+      "selection": {
+        "0": {
+          "1": {},
+          "3": {}
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -120,
+          "y": -160
+        },
+        "scale": 1.25
       },
       "timeline": {
         "isEditorActive": false,
@@ -992,6 +1134,7 @@
   "searchMatchWholeWord": false,
   "replaceEnabled": false,
   "replaceText": "",
+  "pageRuntimeFrontFace": true,
   "breakpoints": {},
   "watchExpressions": [],
   "showComponentDescriptions": true,
@@ -999,9 +1142,14 @@
   "selectedStylePropertyName": "",
   "lvglPart": "MAIN",
   "lvglState": "DEFAULT",
-  "lvglExpandedPropertiesGroup": [],
+  "lvglExpandedPropertiesGroup": [
+    "TEXT",
+    "MISCELLANEOUS",
+    "ARC",
+    "LINE"
+  ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
-  "flowZoom": 1,
+  "flowZoom": 1.25,
   "implementationLanguage": "C"
 }
