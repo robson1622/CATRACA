@@ -157,6 +157,14 @@ void loop() {
       lv_label_set_text(objects.files_label, files.c_str());
     } else if (obj == objects.back_settings_screen_btn_1) {
       lv_scr_load(objects.settings_screen);
+    } else if (obj == objects.trips_screen_btn) {
+      lv_scr_load(objects.trips_log_screen);
+    } else if (obj == objects.obj6__trip_details) {
+      lv_scr_load(objects.trip_details_screen);
+    } else if (obj == objects.obj12__back_to_log_button) {
+      lv_scr_load(objects.trips_log_screen);
+    } else if (obj == objects.backto_main_btn) {
+      lv_scr_load(objects.main);
     }
   }
 }

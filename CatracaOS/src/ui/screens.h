@@ -12,19 +12,21 @@ typedef struct _objects_t {
     lv_obj_t *settings_screen;
     lv_obj_t *bluetooth_settings_screen_;
     lv_obj_t *sd_card_settings_screen;
+    lv_obj_t *trips_log_screen;
+    lv_obj_t *trip_details_screen;
     lv_obj_t *settings_screen_btn;
     lv_obj_t *obj0;
     lv_obj_t *new_route_screen_btn;
-    lv_obj_t *a;
+    lv_obj_t *trips_screen_btn;
     lv_obj_t *list_screen_btn;
     lv_obj_t *obj1;
     lv_obj_t *obj1__clock;
     lv_obj_t *obj1__gps_signal;
-    lv_obj_t *obj1__baytery;
+    lv_obj_t *obj1__baytery_level;
     lv_obj_t *obj2;
     lv_obj_t *obj2__clock;
     lv_obj_t *obj2__gps_signal;
-    lv_obj_t *obj2__baytery;
+    lv_obj_t *obj2__baytery_level;
     lv_obj_t *back_settings_main_btn;
     lv_obj_t *bluetooth_panel_1;
     lv_obj_t *bluetooth_settings_btn;
@@ -33,7 +35,7 @@ typedef struct _objects_t {
     lv_obj_t *obj3;
     lv_obj_t *obj3__clock;
     lv_obj_t *obj3__gps_signal;
-    lv_obj_t *obj3__baytery;
+    lv_obj_t *obj3__baytery_level;
     lv_obj_t *back_settings_screen_btn;
     lv_obj_t *bt_settings_panel;
     lv_obj_t *bluetooth_name_panel_3;
@@ -42,7 +44,7 @@ typedef struct _objects_t {
     lv_obj_t *obj4;
     lv_obj_t *obj4__clock;
     lv_obj_t *obj4__gps_signal;
-    lv_obj_t *obj4__baytery;
+    lv_obj_t *obj4__baytery_level;
     lv_obj_t *back_settings_screen_btn_1;
     lv_obj_t *bt_settings_panel_1;
     lv_obj_t *used_sd_info;
@@ -50,6 +52,55 @@ typedef struct _objects_t {
     lv_obj_t *percentage_sd_info;
     lv_obj_t *sd_bar;
     lv_obj_t *files_label;
+    lv_obj_t *obj5;
+    lv_obj_t *obj5__clock;
+    lv_obj_t *obj5__gps_signal;
+    lv_obj_t *obj5__baytery_level;
+    lv_obj_t *history_container;
+    lv_obj_t *obj6;
+    lv_obj_t *obj6__trip_details;
+    lv_obj_t *obj6__distace_label_1;
+    lv_obj_t *obj6__date_1;
+    lv_obj_t *obj6__end_point_label_1;
+    lv_obj_t *obj6__start_point_lab_1;
+    lv_obj_t *obj7;
+    lv_obj_t *obj7__trip_details;
+    lv_obj_t *obj7__distace_label_1;
+    lv_obj_t *obj7__date_1;
+    lv_obj_t *obj7__end_point_label_1;
+    lv_obj_t *obj7__start_point_lab_1;
+    lv_obj_t *obj8;
+    lv_obj_t *obj8__trip_details;
+    lv_obj_t *obj8__distace_label_1;
+    lv_obj_t *obj8__date_1;
+    lv_obj_t *obj8__end_point_label_1;
+    lv_obj_t *obj8__start_point_lab_1;
+    lv_obj_t *obj9;
+    lv_obj_t *obj9__trip_details;
+    lv_obj_t *obj9__distace_label_1;
+    lv_obj_t *obj9__date_1;
+    lv_obj_t *obj9__end_point_label_1;
+    lv_obj_t *obj9__start_point_lab_1;
+    lv_obj_t *obj10;
+    lv_obj_t *obj10__trip_details;
+    lv_obj_t *obj10__distace_label_1;
+    lv_obj_t *obj10__date_1;
+    lv_obj_t *obj10__end_point_label_1;
+    lv_obj_t *obj10__start_point_lab_1;
+    lv_obj_t *backto_main_btn;
+    lv_obj_t *obj11;
+    lv_obj_t *obj11__clock;
+    lv_obj_t *obj11__gps_signal;
+    lv_obj_t *obj11__baytery_level;
+    lv_obj_t *obj12;
+    lv_obj_t *obj12__back_to_log_button;
+    lv_obj_t *obj12__obj0;
+    lv_obj_t *obj12__obj1;
+    lv_obj_t *obj12__obj2;
+    lv_obj_t *obj12__obj3;
+    lv_obj_t *obj12__obj4;
+    lv_obj_t *obj12__obj5;
+    lv_obj_t *obj12__obj6;
 } objects_t;
 
 extern objects_t objects;
@@ -59,6 +110,8 @@ enum ScreensEnum {
     SCREEN_ID_SETTINGS_SCREEN = 2,
     SCREEN_ID_BLUETOOTH_SETTINGS_SCREEN_ = 3,
     SCREEN_ID_SD_CARD_SETTINGS_SCREEN = 4,
+    SCREEN_ID_TRIPS_LOG_SCREEN = 5,
+    SCREEN_ID_TRIP_DETAILS_SCREEN = 6,
 };
 
 void create_screen_main();
@@ -73,8 +126,20 @@ void tick_screen_bluetooth_settings_screen_();
 void create_screen_sd_card_settings_screen();
 void tick_screen_sd_card_settings_screen();
 
+void create_screen_trips_log_screen();
+void tick_screen_trips_log_screen();
+
+void create_screen_trip_details_screen();
+void tick_screen_trip_details_screen();
+
 void create_user_widget_header(lv_obj_t *parent_obj, int startWidgetIndex);
 void tick_user_widget_header(int startWidgetIndex);
+
+void create_user_widget_trip_container(lv_obj_t *parent_obj, int startWidgetIndex);
+void tick_user_widget_trip_container(int startWidgetIndex);
+
+void create_user_widget_trip_details(lv_obj_t *parent_obj, int startWidgetIndex);
+void tick_user_widget_trip_details(int startWidgetIndex);
 
 void create_screens();
 void tick_screen(int screen_index);
