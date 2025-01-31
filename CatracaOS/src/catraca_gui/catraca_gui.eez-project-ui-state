@@ -1,7 +1,7 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[catraca_gui.eez-project]:/userPages/3",
-    "selectedUserWidgetObject": "[catraca_gui.eez-project]:/userWidgets/0",
+    "selectedUserPageObject": "[catraca_gui.eez-project]:/userPages/4",
+    "selectedUserWidgetObject": "[catraca_gui.eez-project]:/userWidgets/1",
     "selectedActionObject": "[catraca_gui.eez-project]:/actions/0",
     "selectedBitmapObject": "[catraca_gui.eez-project]:/bitmaps/1",
     "subnavigationSelectedItems": {}
@@ -24,7 +24,6 @@
           },
           {
             "type": "border",
-            "selected": 2,
             "size": 240,
             "location": "right",
             "children": [
@@ -119,12 +118,13 @@
             {
               "type": "row",
               "id": "#7e8ff713-60b0-4e49-9d4b-0d10943419c9",
-              "weight": 16.38125066179622,
+              "weight": 14.67386566478835,
               "children": [
                 {
                   "type": "tabset",
                   "id": "#55b7552c-a2fb-45fd-a997-f415d8be3967",
-                  "weight": 0.9887133182844243,
+                  "weight": 1.200902934537246,
+                  "selected": 1,
                   "enableClose": false,
                   "children": [
                     {
@@ -156,7 +156,7 @@
                 {
                   "type": "tabset",
                   "id": "#857a8afc-9c31-4453-871f-71bedf6aac90",
-                  "weight": 1.0112866817155757,
+                  "weight": 0.7990970654627539,
                   "enableClose": false,
                   "children": [
                     {
@@ -190,40 +190,51 @@
             {
               "type": "tabset",
               "id": "EDITORS",
-              "weight": 52.744809850411094,
+              "weight": 53.22250735715126,
               "selected": 2,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
                 {
                   "type": "tab",
-                  "id": "#fe87061a-a6f8-4d73-be77-fd8147fed4e7",
-                  "name": "SettingsScreen",
+                  "id": "#36712556-e88e-4fca-8c2a-a8a1544ea25f",
+                  "name": "Main",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[catraca_gui.eez-project]:/userPages/1",
+                    "objectPath": "[catraca_gui.eez-project]:/userPages/0",
                     "permanent": true
                   },
                   "icon": "svg:page"
                 },
                 {
                   "type": "tab",
-                  "id": "#2b38cd9c-c37b-40b5-ac0f-87764c3147bb",
-                  "name": "BluetoothSettingsScreen ",
+                  "id": "#1399e8b2-0879-466a-b55d-cdeb46d7f104",
+                  "name": "TripsLogScreen",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[catraca_gui.eez-project]:/userPages/2",
-                    "permanent": true
+                    "objectPath": "[catraca_gui.eez-project]:/userPages/4",
+                    "permanent": false
                   },
                   "icon": "svg:page"
                 },
                 {
                   "type": "tab",
-                  "id": "#2dfcc791-2ff6-4a82-ba87-8ab7f1d0d716",
-                  "name": "SDCardSettingsScreen",
+                  "id": "#d950f656-61da-4f99-8b5a-21c0fc8e29b8",
+                  "name": "trip_container",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[catraca_gui.eez-project]:/userPages/3",
+                    "objectPath": "[catraca_gui.eez-project]:/userWidgets/1",
+                    "permanent": false
+                  },
+                  "icon": "svg:user_widget"
+                },
+                {
+                  "type": "tab",
+                  "id": "#0b39860f-f476-46b5-8b31-67f57735dd5a",
+                  "name": "TripDetailsScreen",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[catraca_gui.eez-project]:/userPages/5",
                     "permanent": true
                   },
                   "icon": "svg:page"
@@ -234,12 +245,12 @@
             {
               "type": "row",
               "id": "#dce9069e-a58d-419c-92ec-c87f59ee756a",
-              "weight": 30.873939487792676,
+              "weight": 32.103626978060376,
               "children": [
                 {
                   "type": "tabset",
                   "id": "#14097884-232c-4d5f-8dac-73238c0d3424",
-                  "weight": 1.8323353293413174,
+                  "weight": 2.2634730538922154,
                   "children": [
                     {
                       "type": "tab",
@@ -254,7 +265,7 @@
                 {
                   "type": "tabset",
                   "id": "#466ac938-823b-4f49-bc76-a14bf3c85132",
-                  "weight": 1.1676646706586826,
+                  "weight": 0.7365269461077845,
                   "children": [
                     {
                       "type": "tab",
@@ -1007,9 +1018,9 @@
       "transform": {
         "translate": {
           "x": -293.0233333333335,
-          "y": -226.7022916666667
+          "y": -126.7022916666667
         },
-        "scale": 1.25
+        "scale": 1.1
       },
       "timeline": {
         "isEditorActive": false,
@@ -1037,6 +1048,12 @@
     "[catraca_gui.eez-project]:/userPages/1[flow-state]": {
       "selection": {
         "0": {
+          "0": {
+            "$selected": true
+          },
+          "1": {
+            "0": {}
+          },
           "3": {
             "0": {
               "1": {}
@@ -1050,7 +1067,7 @@
           "x": -139,
           "y": -155
         },
-        "scale": 1.25
+        "scale": 1.5
       },
       "timeline": {
         "isEditorActive": false,
@@ -1063,6 +1080,9 @@
       "selection": {
         "0": {
           "1": {},
+          "2": {
+            "$selected": true
+          },
           "3": {
             "0": {}
           }
@@ -1073,7 +1093,7 @@
           "x": -120,
           "y": -160
         },
-        "scale": 1.25
+        "scale": 1.5
       },
       "timeline": {
         "isEditorActive": false,
@@ -1097,7 +1117,7 @@
           "x": -120,
           "y": -160
         },
-        "scale": 1.25
+        "scale": 1.5
       },
       "timeline": {
         "isEditorActive": false,
@@ -1119,6 +1139,89 @@
           "y": -160
         },
         "scale": 1.25
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[catraca_gui.eez-project]:/userPages/4[flow-state]": {
+      "selection": {
+        "0": {
+          "2": {},
+          "3": {
+            "0": {}
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -246.33333333333337,
+          "y": -155.99999999999994
+        },
+        "scale": 1.1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[catraca_gui.eez-project]:/userWidgets/1[flow-state]": {
+      "selection": {
+        "0": {
+          "0": {},
+          "2": {
+            "$selected": true
+          }
+        }
+      },
+      "transform": {
+        "translate": {
+          "x": -120,
+          "y": -160
+        },
+        "scale": 1.1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[catraca_gui.eez-project]:/userPages/5[flow-state]": {
+      "selection": {
+        "0": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -110,
+          "y": -60
+        },
+        "scale": 1.1
+      },
+      "timeline": {
+        "isEditorActive": false,
+        "position": 0,
+        "secondToPx": 200,
+        "scrollLeft": 0
+      }
+    },
+    "[catraca_gui.eez-project]:/userWidgets/2[flow-state]": {
+      "selection": {
+        "4": {},
+        "6": {}
+      },
+      "transform": {
+        "translate": {
+          "x": -200.388,
+          "y": -183.24533333333346
+        },
+        "scale": 1.1
       },
       "timeline": {
         "isEditorActive": false,
@@ -1153,6 +1256,6 @@
   ],
   "showInactiveFlowsInDebugger": true,
   "globalFlowZoom": true,
-  "flowZoom": 1.25,
+  "flowZoom": 1.1,
   "implementationLanguage": "C"
 }
