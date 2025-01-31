@@ -40,6 +40,14 @@ public:
 
   // Display trip data as a formatted string
   String toString() const;
+
+  String getStartPoint();
+  String getEndPoint();
+  String getDistance();
+  String getDate();
+  String getDuration();
+  String getMaxSpeed();
+  String getAverageSpeed();
 };
 
 #endif

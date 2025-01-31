@@ -47,3 +47,34 @@ String TripData::toString() const {
            startPoint.c_str(), endPoint.c_str(), distance, date.c_str(), time, maxSpeed, averageSpeed);
   return String(buffer);
 }
+
+String TripData::getStartPoint() {
+  return startPoint;
+}
+
+String TripData::getEndPoint() {
+  return endPoint;
+}
+
+String TripData::getDistance() {
+  return String(distance) + " km";
+}
+
+String TripData::getDate() {
+  return date;
+}
+
+String TripData::getDuration() {
+  int hours = time / 3600;
+  int minutes = (time % 3600) / 60;
+  int seconds = time % 60;
+  return String(hours) + "h " + String(minutes) + "m " + String(seconds) + "s";
+}
+
+String TripData::getMaxSpeed() {
+  return String(maxSpeed) + " km/h";
+}
+
+String TripData::getAverageSpeed() {
+  return String(averageSpeed) + " km/h";
+}

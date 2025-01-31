@@ -2,11 +2,15 @@
 #include "ui/ui.h"
 #include <Arduino_GFX_Library.h>
 #include <TAMC_GT911.h>
-//#include "BluetoothInterface.h"
 #include "SDInterface.h"
 #include "TripData.h"
+#include "ui/actions.h"
 
 #define STATIC_UI_MAX_INDEX 500 // Adjust this based on your static UI elements
+
+// Global trips array
+const int MAX_TRIPS = 50; // Adjust based on available memory
+TripData trips[MAX_TRIPS];
 
 #define TFT_BL 27
 #define GFX_BL DF_GFX_BL // Default backlight pin
@@ -35,7 +39,6 @@ static lv_disp_drv_t disp_drv;
 extern lv_event_t g_eez_event;
 extern bool g_eez_event_handled;
 
-//BluetoothInterface bt;
 SDInterface sd(SD_CS);
 
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
@@ -74,9 +77,6 @@ void setup() {
   ts.begin();
   ts.setRotation(1);
 
-  // Initialize Bluetooth
- // bt.begin("CatracaOS");
-
   lv_init();
 
   disp_draw_buf = (lv_color_t *)malloc(sizeof(lv_color_t) * gfx->width() * gfx->height() / 2);
@@ -99,7 +99,7 @@ void setup() {
   // Init EEZ-Studio UI
   ui_init();
 
-    Serial.begin(115200);
+  Serial.begin(115200);
 
   // Initialize the SD card
   if (!sd.begin()) {
@@ -107,15 +107,20 @@ void setup() {
     return;
   }
   Serial.println("SD Card initialized.");
-
 }
+
+void cleanupHistoryPage() {
+  lv_obj_t *child;
+  while ((child = lv_obj_get_child(objects.history_container, NULL)) != NULL) {
+    lv_obj_del(child);
+  }
+}
+
 void loadAndDisplayTripHistory() {
   // Clean up existing widgets
-  lv_obj_clean(objects.history_container);
+  cleanupHistoryPage();
 
   // Load trip history from CSV
-  const int MAX_TRIPS = 50; // Adjust based on available memory
-  TripData trips[MAX_TRIPS];
   int totalTrips = 0;
 
   File file = SD.open("/trips.csv");
@@ -162,8 +167,12 @@ void loadAndDisplayTripHistory() {
     // Update widget labels with trip data (truncate start and end points if necessary)
     lv_label_set_text(((lv_obj_t **)&objects)[widgetIndex + 3], truncateForDisplay(trips[i].getEndPoint(), 8).c_str()); // end_point_label_1
     lv_label_set_text(((lv_obj_t **)&objects)[widgetIndex + 4], truncateForDisplay(trips[i].getStartPoint(), 8).c_str()); // start_point_lab_1
-    lv_label_set_text(((lv_obj_t **)&objects)[widgetIndex + 1], String(trips[i].getDistance(), 1).c_str()); // distace_label_1
+    lv_label_set_text(((lv_obj_t **)&objects)[widgetIndex + 1], trips[i].getDistance().c_str()); // distace_label_1
     lv_label_set_text(((lv_obj_t **)&objects)[widgetIndex + 2], trips[i].getDate().c_str()); // date_1
+
+    // Add event callback to the trip_details button
+    lv_obj_t *tripDetailsButton = ((lv_obj_t **)&objects)[widgetIndex + 0]; // Assuming trip_details button is at index 0
+    lv_obj_add_event_cb(tripDetailsButton, action_trip_details_button, LV_EVENT_CLICKED, (void *)(intptr_t)i);
 
     yPos += 80; // Adjust spacing between entries
     widgetIndex += 5; // Increment widget index for the next trip
@@ -172,15 +181,11 @@ void loadAndDisplayTripHistory() {
 
 void loop() {
   lv_timer_handler();
-  // Update EEZ-Studio UI
   ui_tick();
 
-  //bt.loop();
-  //bt.processReceivedMessage();
-
-  if(g_eez_event_handled) {
-    lv_obj_t * obj = lv_event_get_target(&g_eez_event);
-    Serial.printf("Event handled:  %u\n", obj);
+  if (g_eez_event_handled) {
+    lv_obj_t *obj = lv_event_get_target(&g_eez_event);
+    Serial.printf("Event handled: %u\n", obj);
     g_eez_event_handled = false;
 
     if (obj == objects.settings_screen_btn) {
@@ -224,13 +229,11 @@ void loop() {
     } else if (obj == objects.trips_screen_btn) {
       lv_scr_load(objects.trips_log_screen);
       loadAndDisplayTripHistory();
-    /*}else if (obj == objects.obj6__trip_details) {
-      lv_scr_load(objects.trip_details_screen);
-    } else if (obj == objects.obj10__back_to_log_button) {
-      lv_scr_load(objects.trips_log_screen);*/
     } else if (obj == objects.backto_main_btn) {
-      lv_obj_clean(objects.history_container);
+      cleanupHistoryPage(); // Clean up before navigating away
       lv_scr_load(objects.main);
+    } else if (obj == objects.back_to_log_button) {
+      lv_scr_load(objects.trips_log_screen);
     }
   }
 }
