@@ -5,6 +5,7 @@
 #include "SDInterface.h"
 #include "TripData.h"
 #include "ui/actions.h"
+#include "RenderMap.h"
 
 #define STATIC_UI_MAX_INDEX 500 // Adjust this based on your static UI elements
 
@@ -65,6 +66,15 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
   }
 }
 
+void setup_map_ui() {
+  // In your main code
+  LVVectorMap *vectorMap = new LVVectorMap(objects.map_container));
+
+  // Update position and zoom
+  vectorMap->setPosition(-25.430963, -49.271028);
+  vectorMap->setZoom(12);
+}
+
 void setup() {
   // Initialize display
   gfx->begin();
@@ -107,6 +117,8 @@ void setup() {
     return;
   }
   Serial.println("SD Card initialized.");
+
+  setup_map_ui();
 }
 
 void cleanupHistoryPage() {
@@ -179,9 +191,39 @@ void loadAndDisplayTripHistory() {
   }
 }
 
+void loadSDPage(){
+  String files = sd.listDirToString("/", 0);
+  String test_file = sd.readFileToString("/testeleituras.txt");
+
+  uint64_t total_sd = 0;
+  uint64_t used_sd = 0;
+  sd.getCardInfo(total_sd, used_sd);
+  lv_bar_set_range(objects.sd_bar, 0, total_sd);
+  lv_bar_set_value(objects.sd_bar, used_sd, LV_ANIM_ON);
+
+  float total_sd_gb = total_sd / (1024.0 * 1024.0 * 1024.0);
+  float used_sd_gb = used_sd / (1024.0 * 1024.0 * 1024.0);
+  float usage_sd = (used_sd_gb * 100.0) / total_sd_gb;
+
+  char used_sd_str[10];
+  char total_sd_str[10];
+  char usage_sd_str[10];
+
+  snprintf(used_sd_str, sizeof(used_sd_str), "%.2f GB", used_sd_gb);
+  snprintf(total_sd_str, sizeof(total_sd_str), "%.2f GB", total_sd_gb);
+  snprintf(usage_sd_str, sizeof(usage_sd_str), "%.1f %%", usage_sd);
+
+  lv_label_set_text(objects.used_sd_info, used_sd_str);
+  lv_label_set_text(objects.total_sd_info, total_sd_str);
+  lv_label_set_text(objects.percentage_sd_info, usage_sd_str);
+
+  lv_label_set_text(objects.files_label, files.c_str());
+}
+
 void loop() {
   lv_timer_handler();
-  ui_tick();
+  ui_tick();  
+
 
   if (g_eez_event_handled) {
     lv_obj_t *obj = lv_event_get_target(&g_eez_event);
@@ -198,32 +240,7 @@ void loop() {
       lv_scr_load(objects.settings_screen);
     } else if (obj == objects.sd_card_settings_btn) {
       lv_scr_load(objects.sd_card_settings_screen);
-      String files = sd.listDirToString("/", 0);
-      String test_file = sd.readFileToString("/testeleituras.txt");
-
-      uint64_t total_sd = 0;
-      uint64_t used_sd = 0;
-      sd.getCardInfo(total_sd, used_sd);
-      lv_bar_set_range(objects.sd_bar, 0, total_sd);
-      lv_bar_set_value(objects.sd_bar, used_sd, LV_ANIM_ON);
-
-      float total_sd_gb = total_sd / (1024.0 * 1024.0 * 1024.0);
-      float used_sd_gb = used_sd / (1024.0 * 1024.0 * 1024.0);
-      float usage_sd = (used_sd_gb * 100.0) / total_sd_gb;
-
-      char used_sd_str[10];
-      char total_sd_str[10];
-      char usage_sd_str[10];
-
-      snprintf(used_sd_str, sizeof(used_sd_str), "%.2f GB", used_sd_gb);
-      snprintf(total_sd_str, sizeof(total_sd_str), "%.2f GB", total_sd_gb);
-      snprintf(usage_sd_str, sizeof(usage_sd_str), "%.1f %%", usage_sd);
-
-      lv_label_set_text(objects.used_sd_info, used_sd_str);
-      lv_label_set_text(objects.total_sd_info, total_sd_str);
-      lv_label_set_text(objects.percentage_sd_info, usage_sd_str);
-
-      lv_label_set_text(objects.files_label, files.c_str());
+      loadSDPage();
     } else if (obj == objects.back_settings_screen_btn_1) {
       lv_scr_load(objects.settings_screen);
     } else if (obj == objects.trips_screen_btn) {
