@@ -67,12 +67,7 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
 }
 
 void setup_map_ui() {
-  // In your main code
-  LVVectorMap *vectorMap = new LVVectorMap(objects.map_container));
 
-  // Update position and zoom
-  vectorMap->setPosition(-25.430963, -49.271028);
-  vectorMap->setZoom(12);
 }
 
 void setup() {

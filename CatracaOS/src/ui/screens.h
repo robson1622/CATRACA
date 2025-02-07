@@ -15,7 +15,6 @@ typedef struct _objects_t {
     lv_obj_t *trips_log_screen;
     lv_obj_t *trip_details_screen;
     lv_obj_t *map_container;
-    lv_obj_t *map_img;
     lv_obj_t *obj0;
     lv_obj_t *obj0__clock;
     lv_obj_t *obj0__gps_signal;

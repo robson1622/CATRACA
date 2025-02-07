@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.ejs": "html",
         "stdbool.h": "c",
         "actions.h": "c",
         "array": "cpp",
@@ -52,6 +53,8 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "lvgl.h": "c",
-        "screens.h": "c"
+        "screens.h": "c",
+        "bruj.c": "cpp",
+        "navfinish.c": "cpp"
     }
 }
