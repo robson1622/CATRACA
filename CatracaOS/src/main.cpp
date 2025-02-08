@@ -5,6 +5,7 @@
 #include "SDInterface.h"
 #include "TripData.h"
 #include "ui/actions.h"
+#include "GPSInterface.h"
 
 #define STATIC_UI_MAX_INDEX 500 // Adjust this based on your static UI elements
 
@@ -40,6 +41,10 @@ extern lv_event_t g_eez_event;
 extern bool g_eez_event_handled;
 
 SDInterface sd(SD_CS);
+
+#define RXD2 22 
+#define TXD2 27 
+GPS gps(Serial2);
 
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
@@ -107,6 +112,8 @@ void setup() {
     return;
   }
   Serial.println("SD Card initialized.");
+
+  gps.begin(9600, RXD2, TXD2);
 }
 
 void cleanupHistoryPage() {
@@ -139,6 +146,8 @@ void loadAndDisplayTripHistory() {
     totalTrips++;
   }
   file.close();
+
+  delay(100); // Wait for the file to close
 
   // Create UI components for each trip
   lv_coord_t yPos = 0; // Vertical position for each entry
@@ -176,12 +185,59 @@ void loadAndDisplayTripHistory() {
 
     yPos += 80; // Adjust spacing between entries
     widgetIndex += 5; // Increment widget index for the next trip
+    delay(10); // Delay to allow the UI to update
   }
+}
+
+void updateGPSmainScree() {
+  delay(100);
+  // Update GPS data on the main screen
+  lv_label_set_text(objects.altitude_label, String(gps.getAltitude()).c_str());
+  lv_label_set_text(objects.latitude_label, String(gps.getLatitude(), 6).c_str());
+  lv_label_set_text(objects.longitude_label, String(gps.getLongitude(), 6).c_str());
+  lv_label_set_text(objects.speed_label, String(gps.getSpeed()).c_str()); 
+  lv_label_set_text(objects.satellites_label, String(gps.getSatellites()).c_str());
+  lv_label_set_text(objects.gps_fix_label, gps.getFix().c_str());
+}
+
+void loadSDScreen() {
+  String files = sd.listDirToString("/", 0);
+  String test_file = sd.readFileToString("/testeleituras.txt");
+
+  uint64_t total_sd = 0;
+  uint64_t used_sd = 0;
+  sd.getCardInfo(total_sd, used_sd);
+  lv_bar_set_range(objects.sd_bar, 0, total_sd);
+  lv_bar_set_value(objects.sd_bar, used_sd, LV_ANIM_ON);
+
+  float total_sd_gb = total_sd / (1024.0 * 1024.0 * 1024.0);
+  float used_sd_gb = used_sd / (1024.0 * 1024.0 * 1024.0);
+  float usage_sd = (used_sd_gb * 100.0) / total_sd_gb;
+
+  char used_sd_str[10];
+  char total_sd_str[10];
+  char usage_sd_str[10];
+
+  snprintf(used_sd_str, sizeof(used_sd_str), "%.2f GB", used_sd_gb);
+  snprintf(total_sd_str, sizeof(total_sd_str), "%.2f GB", total_sd_gb);
+  snprintf(usage_sd_str, sizeof(usage_sd_str), "%.1f %%", usage_sd);
+
+  lv_label_set_text(objects.used_sd_info, used_sd_str);
+  lv_label_set_text(objects.total_sd_info, total_sd_str);
+  lv_label_set_text(objects.percentage_sd_info, usage_sd_str);
+
+  lv_label_set_text(objects.files_label, files.c_str());
 }
 
 void loop() {
   lv_timer_handler();
   ui_tick();
+
+  // If the current screen is the main screen, update GPS data
+  if (lv_scr_act() == objects.main) {
+    gps.loop();
+    updateGPSmainScree();
+  }
 
   if (g_eez_event_handled) {
     lv_obj_t *obj = lv_event_get_target(&g_eez_event);
@@ -198,35 +254,10 @@ void loop() {
       lv_scr_load(objects.settings_screen);
     } else if (obj == objects.sd_card_settings_btn) {
       lv_scr_load(objects.sd_card_settings_screen);
-      String files = sd.listDirToString("/", 0);
-      String test_file = sd.readFileToString("/testeleituras.txt");
-
-      uint64_t total_sd = 0;
-      uint64_t used_sd = 0;
-      sd.getCardInfo(total_sd, used_sd);
-      lv_bar_set_range(objects.sd_bar, 0, total_sd);
-      lv_bar_set_value(objects.sd_bar, used_sd, LV_ANIM_ON);
-
-      float total_sd_gb = total_sd / (1024.0 * 1024.0 * 1024.0);
-      float used_sd_gb = used_sd / (1024.0 * 1024.0 * 1024.0);
-      float usage_sd = (used_sd_gb * 100.0) / total_sd_gb;
-
-      char used_sd_str[10];
-      char total_sd_str[10];
-      char usage_sd_str[10];
-
-      snprintf(used_sd_str, sizeof(used_sd_str), "%.2f GB", used_sd_gb);
-      snprintf(total_sd_str, sizeof(total_sd_str), "%.2f GB", total_sd_gb);
-      snprintf(usage_sd_str, sizeof(usage_sd_str), "%.1f %%", usage_sd);
-
-      lv_label_set_text(objects.used_sd_info, used_sd_str);
-      lv_label_set_text(objects.total_sd_info, total_sd_str);
-      lv_label_set_text(objects.percentage_sd_info, usage_sd_str);
-
-      lv_label_set_text(objects.files_label, files.c_str());
+      loadSDScreen();
     } else if (obj == objects.back_settings_screen_btn_1) {
       lv_scr_load(objects.settings_screen);
-    } else if (obj == objects.trips_screen_btn) {
+    } else if (obj == objects.trips_screen_button) {
       lv_scr_load(objects.trips_log_screen);
       loadAndDisplayTripHistory();
     } else if (obj == objects.backto_main_btn) {
@@ -234,6 +265,10 @@ void loop() {
       lv_scr_load(objects.main);
     } else if (obj == objects.back_to_log_button) {
       lv_scr_load(objects.trips_log_screen);
+    } else if(obj == objects.new_route_btn) {
+      lv_scr_load(objects.new_route);
+    } else if(obj == objects.new_route_back_main) {
+      lv_scr_load(objects.main);
     }
   }
 }

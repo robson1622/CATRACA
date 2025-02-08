@@ -24,6 +24,7 @@
           },
           {
             "type": "border",
+            "selected": 2,
             "size": 240,
             "location": "right",
             "children": [
@@ -191,7 +192,6 @@
               "type": "tabset",
               "id": "EDITORS",
               "weight": 53.22250735715126,
-              "selected": 2,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
