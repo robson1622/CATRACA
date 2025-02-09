@@ -229,14 +229,43 @@ void loadSDScreen() {
   lv_label_set_text(objects.files_label, files.c_str());
 }
 
+void updateInstructions(){
+  static unsigned long lastMillis = 0;
+  static unsigned long elapsedSeconds = 0;
+  static bool timerPaused = false;
+  String instruction = "Head northeast on Av. Castro Alves toward R. Rondonia\n";
+
+  if (!timerPaused && millis() - lastMillis >= 1000) {
+    lastMillis += 1000;
+    elapsedSeconds++;
+
+    unsigned long hours = elapsedSeconds / 3600;
+    unsigned long minutes = (elapsedSeconds % 3600) / 60;
+    unsigned long seconds = elapsedSeconds % 60;
+
+    char timerStr[9];
+    snprintf(timerStr, sizeof(timerStr), "%02lu:%02lu:%02lu", hours, minutes, seconds);
+    lv_label_set_text(objects.timer_label, timerStr);
+  }
+
+  lv_label_set_text(objects.distance_label, "100 m");
+  lv_label_set_text(objects.time_for_next_instruction, "30 min");
+  lv_label_set_text(objects.speed_label_trip, (String(gps.getSpeed()).c_str()));
+  lv_textarea_set_text(objects.instruction_text_area, instruction.c_str());
+}
+
 void loop() {
   lv_timer_handler();
   ui_tick();
 
   // If the current screen is the main screen, update GPS data
-  if (lv_scr_act() == objects.main) {
+  if (lv_scr_act() == objects.main || lv_scr_act() == objects.instructions_screen) {
     gps.loop();
     updateGPSmainScree();
+  }
+
+  if (lv_scr_act() == objects.instructions_screen) {
+    gps.loop();
   }
 
   if (g_eez_event_handled) {
@@ -268,6 +297,15 @@ void loop() {
     } else if(obj == objects.new_route_btn) {
       lv_scr_load(objects.new_route);
     } else if(obj == objects.new_route_back_main) {
+      lv_scr_load(objects.main);
+    } else if(obj == objects.go_to_trip_info_btn){
+      lv_scr_load(objects.trips_info_page);
+    } else if(obj == objects.go_back_new_route){
+      lv_scr_load(objects.new_route);
+    } else if(obj == objects.go_to_trip_btn){
+      lv_scr_load(objects.instructions_screen);
+      updateInstructions();
+    } else if(obj == objects.cancel_trip){
       lv_scr_load(objects.main);
     }
   }

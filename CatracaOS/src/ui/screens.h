@@ -15,6 +15,8 @@ typedef struct _objects_t {
     lv_obj_t *trips_log_screen;
     lv_obj_t *trip_details_screen;
     lv_obj_t *new_route;
+    lv_obj_t *trips_info_page;
+    lv_obj_t *instructions_screen;
     lv_obj_t *settings_screen_btn;
     lv_obj_t *new_route_btn;
     lv_obj_t *new_route_screen_btn;
@@ -77,8 +79,26 @@ typedef struct _objects_t {
     lv_obj_t *trip_details_avg_speed_label;
     lv_obj_t *obj10;
     lv_obj_t *new_route_back_main;
-    lv_obj_t *new_route_back_main_1;
+    lv_obj_t *go_to_trip_info_btn;
     lv_obj_t *obj11;
+    lv_obj_t *go_back_new_route;
+    lv_obj_t *obj12;
+    lv_obj_t *trip_details_end_label_1;
+    lv_obj_t *trip_details_start_label_1;
+    lv_obj_t *obj13;
+    lv_obj_t *estimated_distance_label;
+    lv_obj_t *estimated_time_label;
+    lv_obj_t *go_to_trip_btn;
+    lv_obj_t *timer_label;
+    lv_obj_t *speed_label_trip;
+    lv_obj_t *instruction_text_area;
+    lv_obj_t *settings_screen_btn_1;
+    lv_obj_t *pause_trip;
+    lv_obj_t *new_route_screen_btn_1;
+    lv_obj_t *cancel_trip;
+    lv_obj_t *list_screen_btn_1;
+    lv_obj_t *distance_label;
+    lv_obj_t *time_for_next_instruction;
 } objects_t;
 
 extern objects_t objects;
@@ -91,6 +111,8 @@ enum ScreensEnum {
     SCREEN_ID_TRIPS_LOG_SCREEN = 5,
     SCREEN_ID_TRIP_DETAILS_SCREEN = 6,
     SCREEN_ID_NEW_ROUTE = 7,
+    SCREEN_ID_TRIPS_INFO_PAGE = 8,
+    SCREEN_ID_INSTRUCTIONS_SCREEN = 9,
 };
 
 void create_screen_main();
@@ -113,6 +135,12 @@ void tick_screen_trip_details_screen();
 
 void create_screen_new_route();
 void tick_screen_new_route();
+
+void create_screen_trips_info_page();
+void tick_screen_trips_info_page();
+
+void create_screen_instructions_screen();
+void tick_screen_instructions_screen();
 
 void create_user_widget_header(lv_obj_t *parent_obj, int startWidgetIndex);
 void tick_user_widget_header(int startWidgetIndex);

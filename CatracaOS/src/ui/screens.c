@@ -250,7 +250,7 @@ void create_screen_settings_screen() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 19);
+            create_user_widget_header(obj, 21);
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -371,7 +371,7 @@ void create_screen_settings_screen() {
 }
 
 void tick_screen_settings_screen() {
-    tick_user_widget_header(19);
+    tick_user_widget_header(21);
 }
 
 void create_screen_bluetooth_settings_screen_() {
@@ -392,7 +392,7 @@ void create_screen_bluetooth_settings_screen_() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 28);
+            create_user_widget_header(obj, 30);
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -501,7 +501,7 @@ void create_screen_bluetooth_settings_screen_() {
 }
 
 void tick_screen_bluetooth_settings_screen_() {
-    tick_user_widget_header(28);
+    tick_user_widget_header(30);
 }
 
 void create_screen_sd_card_settings_screen() {
@@ -522,7 +522,7 @@ void create_screen_sd_card_settings_screen() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 37);
+            create_user_widget_header(obj, 39);
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
@@ -635,7 +635,7 @@ void create_screen_sd_card_settings_screen() {
 }
 
 void tick_screen_sd_card_settings_screen() {
-    tick_user_widget_header(37);
+    tick_user_widget_header(39);
 }
 
 void create_screen_trips_log_screen() {
@@ -718,7 +718,7 @@ void create_screen_trip_details_screen() {
             lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
             lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 50);
+            create_user_widget_header(obj, 52);
         }
         {
             lv_obj_t *obj = lv_label_create(parent_obj);
@@ -956,7 +956,7 @@ void create_screen_trip_details_screen() {
 }
 
 void tick_screen_trip_details_screen() {
-    tick_user_widget_header(50);
+    tick_user_widget_header(52);
 }
 
 void create_screen_new_route() {
@@ -970,7 +970,79 @@ void create_screen_new_route() {
             // new_route_back_main
             lv_obj_t *obj = lv_btn_create(parent_obj);
             objects.new_route_back_main = obj;
-            lv_obj_set_pos(obj, 10, 278);
+            lv_obj_set_pos(obj, 10, 280);
+            lv_obj_set_size(obj, 220, 35);
+            lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xffe84d4d), LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, 0, 1);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Back");
+                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+            }
+        }
+        {
+            // go_to_trip_info_btn
+            lv_obj_t *obj = lv_btn_create(parent_obj);
+            objects.go_to_trip_info_btn = obj;
+            lv_obj_set_pos(obj, 10, 237);
+            lv_obj_set_size(obj, 220, 35);
+            lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, 0, 1);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Go");
+                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_spinner_create(parent_obj, 1000, 60);
+            objects.obj11 = obj;
+            lv_obj_set_pos(obj, 73, 101);
+            lv_obj_set_size(obj, 94, 96);
+            lv_obj_set_style_arc_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 40, 18);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Waiting for Route");
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            lv_obj_t *obj = lv_label_create(parent_obj);
+            lv_obj_set_pos(obj, 48, 49);
+            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+            lv_label_set_text(obj, "Use the App to send a route\n     trought Bluetooth.");
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+    }
+}
+
+void tick_screen_new_route() {
+}
+
+void create_screen_trips_info_page() {
+    lv_obj_t *obj = lv_obj_create(0);
+    objects.trips_info_page = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 240, 320);
+    {
+        lv_obj_t *parent_obj = obj;
+        {
+            // go_back_new_route
+            lv_obj_t *obj = lv_btn_create(parent_obj);
+            objects.go_back_new_route = obj;
+            lv_obj_set_pos(obj, 11, 281);
             lv_obj_set_size(obj, 220, 35);
             lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xffe84d4d), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -986,42 +1058,316 @@ void create_screen_new_route() {
             }
         }
         {
-            // new_route_back_main_1
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 8, 9);
+            lv_obj_set_size(obj, 223, 89);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.obj12 = obj;
+                    lv_obj_set_pos(obj, -6, -5);
+                    lv_obj_set_size(obj, 30, 30);
+                    lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    // trip_details_end_label_1
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.trip_details_end_label_1 = obj;
+                    lv_obj_set_pos(obj, 30, 36);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "UTFPR");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    // trip_details_start_label_1
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.trip_details_start_label_1 = obj;
+                    lv_obj_set_pos(obj, 29, 1);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Casa");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.obj13 = obj;
+                    lv_obj_set_pos(obj, -6, 30);
+                    lv_obj_set_size(obj, 30, 30);
+                    lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 9, 107);
+            lv_obj_set_size(obj, 223, 59);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // estimated_distance_label
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.estimated_distance_label = obj;
+                    lv_obj_set_pos(obj, -6, 11);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "14.23 km");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, -6, -5);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Estimated Distance");
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 9, 172);
+            lv_obj_set_size(obj, 223, 59);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // estimated_time_label
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.estimated_time_label = obj;
+                    lv_obj_set_pos(obj, -6, 11);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "35.7 km/h");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, -6, -5);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Estimated Time");
+                }
+            }
+        }
+        {
+            // go_to_trip_btn
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.new_route_back_main_1 = obj;
-            lv_obj_set_pos(obj, 10, 229);
-            lv_obj_set_size(obj, 220, 35);
+            objects.go_to_trip_btn = obj;
+            lv_obj_set_pos(obj, 10, 238);
+            lv_obj_set_size(obj, 222, 35);
             lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
-                    lv_obj_set_pos(obj, -1, 9);
+                    lv_obj_set_pos(obj, 0, 1);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "Start\n");
+                    lv_label_set_text(obj, "Start Trip");
                     lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
             }
         }
+    }
+}
+
+void tick_screen_trips_info_page() {
+}
+
+void create_screen_instructions_screen() {
+    lv_obj_t *obj = lv_obj_create(0);
+    objects.instructions_screen = obj;
+    lv_obj_set_pos(obj, 0, 0);
+    lv_obj_set_size(obj, 240, 320);
+    {
+        lv_obj_t *parent_obj = obj;
         {
-            lv_obj_t *obj = lv_spinner_create(parent_obj, 1000, 60);
-            objects.obj11 = obj;
-            lv_obj_set_pos(obj, 73, 92);
-            lv_obj_set_size(obj, 94, 96);
-            lv_obj_set_style_arc_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_DEFAULT);
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 2, 2);
+            lv_obj_set_size(obj, 114, 59);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // timer_label
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.timer_label = obj;
+                    lv_obj_set_pos(obj, -7, 11);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "00:00:12");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, -7, -6);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Elapsed Time:");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+            }
         }
         {
-            lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 40, 25);
-            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text(obj, "Waiting for Route");
-            lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 124, 2);
+            lv_obj_set_size(obj, 114, 59);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // speed_label_trip
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.speed_label_trip = obj;
+                    lv_obj_set_pos(obj, -7, 11);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "14.56");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, -7, -6);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Speed (km/h)");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+            }
+        }
+        {
+            // instruction text area
+            lv_obj_t *obj = lv_textarea_create(parent_obj);
+            objects.instruction_text_area = obj;
+            lv_obj_set_pos(obj, 0, 138);
+            lv_obj_set_size(obj, 236, 110);
+            lv_textarea_set_max_length(obj, 128);
+            lv_textarea_set_placeholder_text(obj, "Vire a direita na rua AAAAAAAAAAAA");
+            lv_textarea_set_one_line(obj, false);
+            lv_textarea_set_password_mode(obj, false);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
+            lv_obj_set_style_text_font(obj, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 41, 257);
+            lv_obj_set_size(obj, 157, 60);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE|LV_OBJ_FLAG_CLICK_FOCUSABLE|LV_OBJ_FLAG_GESTURE_BUBBLE|LV_OBJ_FLAG_PRESS_LOCK|LV_OBJ_FLAG_SCROLLABLE|LV_OBJ_FLAG_SCROLL_CHAIN_VER|LV_OBJ_FLAG_SCROLL_MOMENTUM|LV_OBJ_FLAG_SCROLL_WITH_ARROW|LV_OBJ_FLAG_SNAPPABLE);
+            lv_obj_set_style_arc_rounded(obj, true, LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // SettingsScreenBtn_1
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.settings_screen_btn_1 = obj;
+                    lv_obj_set_pos(obj, 92, -5);
+                    lv_obj_set_size(obj, 40, 40);
+                    lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            lv_obj_set_pos(obj, 2, 0);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_label_set_text(obj, "o");
+                            lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+                        }
+                    }
+                }
+                {
+                    // pause trip
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.pause_trip = obj;
+                    lv_obj_set_pos(obj, 44, -5);
+                    lv_obj_set_size(obj, 40, 40);
+                    lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            // NewRouteScreenBtn_1
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.new_route_screen_btn_1 = obj;
+                            lv_obj_set_pos(obj, 1, 4);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_label_set_text(obj, "I I");
+                            lv_obj_set_style_text_font(obj, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
+                        }
+                    }
+                }
+                {
+                    // cancel_trip
+                    lv_obj_t *obj = lv_btn_create(parent_obj);
+                    objects.cancel_trip = obj;
+                    lv_obj_set_pos(obj, -4, -5);
+                    lv_obj_set_size(obj, 40, 40);
+                    lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
+                    lv_obj_set_style_bg_color(obj, lv_color_hex(0xffea5454), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            // ListScreenBtn_1
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.list_screen_btn_1 = obj;
+                            lv_obj_set_pos(obj, 1, 2);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_label_set_text(obj, "<");
+                            lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
+                        }
+                    }
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 2, 69);
+            lv_obj_set_size(obj, 114, 59);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // distance_label
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.distance_label = obj;
+                    lv_obj_set_pos(obj, -7, 11);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "400 m");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, -7, -6);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "In:");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+            }
+        }
+        {
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            lv_obj_set_pos(obj, 124, 69);
+            lv_obj_set_size(obj, 114, 59);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    // time_for_next_instruction
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    objects.time_for_next_instruction = obj;
+                    lv_obj_set_pos(obj, -7, 11);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "12:30 m");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, -7, -6);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Expected Time");
+                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+            }
         }
     }
 }
 
-void tick_screen_new_route() {
+void tick_screen_instructions_screen() {
 }
 
 void create_user_widget_header(lv_obj_t *parent_obj, int startWidgetIndex) {
@@ -1364,6 +1710,8 @@ void create_screens() {
     create_screen_trips_log_screen();
     create_screen_trip_details_screen();
     create_screen_new_route();
+    create_screen_trips_info_page();
+    create_screen_instructions_screen();
 }
 
 typedef void (*tick_screen_func_t)();
@@ -1376,6 +1724,8 @@ tick_screen_func_t tick_screen_funcs[] = {
     tick_screen_trips_log_screen,
     tick_screen_trip_details_screen,
     tick_screen_new_route,
+    tick_screen_trips_info_page,
+    tick_screen_instructions_screen,
     0,
     0,
     0,
