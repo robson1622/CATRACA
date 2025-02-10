@@ -5,7 +5,7 @@
 #include "SDInterface.h"
 #include "TripData.h"
 #include "ui/actions.h"
-#include "GPSInterface.h"
+#include "TripInstructions.h"
 
 #define STATIC_UI_MAX_INDEX 500 // Adjust this based on your static UI elements
 
@@ -44,7 +44,7 @@ SDInterface sd(SD_CS);
 
 #define RXD2 22 
 #define TXD2 27 
-GPS gps(Serial2);
+GPS *gps = new GPS(Serial2);
 
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
@@ -113,7 +113,7 @@ void setup() {
   }
   Serial.println("SD Card initialized.");
 
-  gps.begin(9600, RXD2, TXD2);
+  gps->begin(9600, RXD2, TXD2);
 }
 
 void cleanupHistoryPage() {
@@ -192,12 +192,12 @@ void loadAndDisplayTripHistory() {
 void updateGPSmainScree() {
   delay(100);
   // Update GPS data on the main screen
-  lv_label_set_text(objects.altitude_label, String(gps.getAltitude()).c_str());
-  lv_label_set_text(objects.latitude_label, String(gps.getLatitude(), 6).c_str());
-  lv_label_set_text(objects.longitude_label, String(gps.getLongitude(), 6).c_str());
-  lv_label_set_text(objects.speed_label, String(gps.getSpeed()).c_str()); 
-  lv_label_set_text(objects.satellites_label, String(gps.getSatellites()).c_str());
-  lv_label_set_text(objects.gps_fix_label, gps.getFix().c_str());
+  lv_label_set_text(objects.altitude_label, String(gps->getAltitude()).c_str());
+  lv_label_set_text(objects.latitude_label, String(gps->getLatitude(), 6).c_str());
+  lv_label_set_text(objects.longitude_label, String(gps->getLongitude(), 6).c_str());
+  lv_label_set_text(objects.speed_label, String(gps->getSpeed()).c_str()); 
+  lv_label_set_text(objects.satellites_label, String(gps->getSatellites()).c_str());
+  lv_label_set_text(objects.gps_fix_label, gps->getFix().c_str());
 }
 
 void loadSDScreen() {
@@ -229,43 +229,19 @@ void loadSDScreen() {
   lv_label_set_text(objects.files_label, files.c_str());
 }
 
-void updateInstructions(){
-  static unsigned long lastMillis = 0;
-  static unsigned long elapsedSeconds = 0;
-  static bool timerPaused = false;
-  String instruction = "Head northeast on Av. Castro Alves toward R. Rondonia\n";
-
-  if (!timerPaused && millis() - lastMillis >= 1000) {
-    lastMillis += 1000;
-    elapsedSeconds++;
-
-    unsigned long hours = elapsedSeconds / 3600;
-    unsigned long minutes = (elapsedSeconds % 3600) / 60;
-    unsigned long seconds = elapsedSeconds % 60;
-
-    char timerStr[9];
-    snprintf(timerStr, sizeof(timerStr), "%02lu:%02lu:%02lu", hours, minutes, seconds);
-    lv_label_set_text(objects.timer_label, timerStr);
-  }
-
-  lv_label_set_text(objects.distance_label, "100 m");
-  lv_label_set_text(objects.time_for_next_instruction, "30 min");
-  lv_label_set_text(objects.speed_label_trip, (String(gps.getSpeed()).c_str()));
-  lv_textarea_set_text(objects.instruction_text_area, instruction.c_str());
-}
-
 void loop() {
   lv_timer_handler();
   ui_tick();
 
   // If the current screen is the main screen, update GPS data
   if (lv_scr_act() == objects.main || lv_scr_act() == objects.instructions_screen) {
-    gps.loop();
+    gps->loop();
     updateGPSmainScree();
   }
 
   if (lv_scr_act() == objects.instructions_screen) {
-    gps.loop();
+    gps->loop();
+    updateInstructions(gps->getLatitude(), gps->getLongitude(), *gps);
   }
 
   if (g_eez_event_handled) {
@@ -304,7 +280,6 @@ void loop() {
       lv_scr_load(objects.new_route);
     } else if(obj == objects.go_to_trip_btn){
       lv_scr_load(objects.instructions_screen);
-      updateInstructions();
     } else if(obj == objects.cancel_trip){
       lv_scr_load(objects.main);
     }

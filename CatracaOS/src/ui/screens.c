@@ -1137,14 +1137,14 @@ void create_screen_trips_info_page() {
                     objects.estimated_time_label = obj;
                     lv_obj_set_pos(obj, -6, 11);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "35.7 km/h");
+                    lv_label_set_text(obj, "32 min");
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_22, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
                 {
                     lv_obj_t *obj = lv_label_create(parent_obj);
                     lv_obj_set_pos(obj, -6, -5);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "Estimated Time");
+                    lv_label_set_text(obj, "Estimated Duration");
                 }
             }
         }
@@ -1359,7 +1359,7 @@ void create_screen_instructions_screen() {
                     lv_obj_t *obj = lv_label_create(parent_obj);
                     lv_obj_set_pos(obj, -7, -6);
                     lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-                    lv_label_set_text(obj, "Expected Time");
+                    lv_label_set_text(obj, "Duration");
                     lv_obj_set_style_text_font(obj, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
                 }
             }
