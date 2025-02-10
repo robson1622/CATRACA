@@ -8,7 +8,7 @@
 #include "GPSInterface.h"
 
 #define EARTH_RADIUS 6371000 // Earth's radius in meters
-#define JSON_FILE "./trip.json" // JSON file path on SD card
+#define JSON_FILE "/trip.json" // JSON file path on SD card
 
 struct Step {
     String instruction;
