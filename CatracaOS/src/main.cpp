@@ -5,7 +5,7 @@
 #include "SDInterface.h"
 #include "TripData.h"
 #include "ui/actions.h"
-#include "RenderMap.h"
+#include "TripInstructions.h"
 
 #define STATIC_UI_MAX_INDEX 500 // Adjust this based on your static UI elements
 
@@ -42,6 +42,10 @@ extern bool g_eez_event_handled;
 
 SDInterface sd(SD_CS);
 
+#define RXD2 22 
+#define TXD2 27 
+GPS *gps = new GPS(Serial2);
+
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
   uint32_t h = (area->y2 - area->y1 + 1);
@@ -64,15 +68,6 @@ void my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t *data) {
   } else {
     data->state = LV_INDEV_STATE_REL;
   }
-}
-
-void setup_map_ui() {
-  // In your main code
-  LVVectorMap *vectorMap = new LVVectorMap(objects.map_container));
-
-  // Update position and zoom
-  vectorMap->setPosition(-25.430963, -49.271028);
-  vectorMap->setZoom(12);
 }
 
 void setup() {
@@ -118,7 +113,7 @@ void setup() {
   }
   Serial.println("SD Card initialized.");
 
-  setup_map_ui();
+  gps->begin(9600, RXD2, TXD2);
 }
 
 void cleanupHistoryPage() {
@@ -151,6 +146,8 @@ void loadAndDisplayTripHistory() {
     totalTrips++;
   }
   file.close();
+
+  delay(100); // Wait for the file to close
 
   // Create UI components for each trip
   lv_coord_t yPos = 0; // Vertical position for each entry
@@ -188,10 +185,22 @@ void loadAndDisplayTripHistory() {
 
     yPos += 80; // Adjust spacing between entries
     widgetIndex += 5; // Increment widget index for the next trip
+    delay(10); // Delay to allow the UI to update
   }
 }
 
-void loadSDPage(){
+void updateGPSmainScree() {
+  delay(100);
+  // Update GPS data on the main screen
+  lv_label_set_text(objects.altitude_label, String(gps->getAltitude()).c_str());
+  lv_label_set_text(objects.latitude_label, String(gps->getLatitude(), 6).c_str());
+  lv_label_set_text(objects.longitude_label, String(gps->getLongitude(), 6).c_str());
+  lv_label_set_text(objects.speed_label, String(gps->getSpeed()).c_str()); 
+  lv_label_set_text(objects.satellites_label, String(gps->getSatellites()).c_str());
+  lv_label_set_text(objects.gps_fix_label, gps->getFix().c_str());
+}
+
+void loadSDScreen() {
   String files = sd.listDirToString("/", 0);
   String test_file = sd.readFileToString("/testeleituras.txt");
 
@@ -222,8 +231,18 @@ void loadSDPage(){
 
 void loop() {
   lv_timer_handler();
-  ui_tick();  
+  ui_tick();
 
+  // If the current screen is the main screen, update GPS data
+  if (lv_scr_act() == objects.main || lv_scr_act() == objects.instructions_screen) {
+    gps->loop();
+    updateGPSmainScree();
+  }
+
+  if (lv_scr_act() == objects.instructions_screen) {
+    gps->loop();
+    updateInstructions(gps->getLatitude(), gps->getLongitude(), *gps);
+  }
 
   if (g_eez_event_handled) {
     lv_obj_t *obj = lv_event_get_target(&g_eez_event);
@@ -240,10 +259,10 @@ void loop() {
       lv_scr_load(objects.settings_screen);
     } else if (obj == objects.sd_card_settings_btn) {
       lv_scr_load(objects.sd_card_settings_screen);
-      loadSDPage();
+      loadSDScreen();
     } else if (obj == objects.back_settings_screen_btn_1) {
       lv_scr_load(objects.settings_screen);
-    } else if (obj == objects.trips_screen_btn) {
+    } else if (obj == objects.trips_screen_button) {
       lv_scr_load(objects.trips_log_screen);
       loadAndDisplayTripHistory();
     } else if (obj == objects.backto_main_btn) {
@@ -251,6 +270,18 @@ void loop() {
       lv_scr_load(objects.main);
     } else if (obj == objects.back_to_log_button) {
       lv_scr_load(objects.trips_log_screen);
+    } else if(obj == objects.new_route_btn) {
+      lv_scr_load(objects.new_route);
+    } else if(obj == objects.new_route_back_main) {
+      lv_scr_load(objects.main);
+    } else if(obj == objects.go_to_trip_info_btn){
+      lv_scr_load(objects.trips_info_page);
+    } else if(obj == objects.go_back_new_route){
+      lv_scr_load(objects.new_route);
+    } else if(obj == objects.go_to_trip_btn){
+      lv_scr_load(objects.instructions_screen);
+    } else if(obj == objects.cancel_trip){
+      lv_scr_load(objects.main);
     }
   }
 }

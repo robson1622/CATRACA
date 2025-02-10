@@ -1,13 +1,10 @@
-#ifndef GPSINTERFACE_H
-#define GPSINTERFACE_H
-
 #include <TinyGPS++.h>
 #include <HardwareSerial.h>
 
 class GPS {
 public:
     GPS(HardwareSerial &serial);
-    void begin(int baudRate);
+    void begin(int baudRate, int rxPin, int txPin);
     void loop();
     String getParsedData() const;
     float getLatitude() const;
@@ -16,6 +13,7 @@ public:
     float getSpeed() const;
     int getSatellites() const;
 
+    String getFix();
 private:
     void parseGPSData();
     HardwareSerial &gpsSerial;
@@ -27,5 +25,3 @@ private:
     float speed;
     int satellites;
 };
-
-#endif // GPSINTERFACE_H
