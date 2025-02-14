@@ -17,6 +17,8 @@ void updateTripDetailsScreen(int tripIndex) {
   // Load the trip data for the given index
   TripData trip = trips[tripIndex]; // Access the global trips array
 
+  Serial.print("AQUI");
+
   // Update the trip details screen with the trip data
   lv_label_set_text(objects.trip_details_start_label, trip.getStartPoint().c_str());
   lv_label_set_text(objects.trip_details_end_label, trip.getEndPoint().c_str());

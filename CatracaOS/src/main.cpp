@@ -10,7 +10,7 @@
 #define STATIC_UI_MAX_INDEX 500 // Adjust this based on your static UI elements
 
 // Global trips array
-const int MAX_TRIPS = 50; // Adjust based on available memory
+const int MAX_TRIPS = 5; // Adjust based on available memory
 TripData trips[MAX_TRIPS];
 
 #define TFT_BL 27
