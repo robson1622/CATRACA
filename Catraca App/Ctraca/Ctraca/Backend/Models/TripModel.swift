@@ -8,8 +8,9 @@
 import Foundation
 
 
-struct TripModel : Hashable, Codable{
+struct TripModel : Codable{
     var id = UUID()
+    var idOwner : UUID?
     var startDate : Date
     var endDate : Date
     var distance : Double
@@ -17,8 +18,8 @@ struct TripModel : Hashable, Codable{
     var maxSpeed : Double
     var startLocal : String
     var endLocal : String
-    
-//    func getDuration() -> TimeInterval{
-//        
-//    }
+    var routePoints : [PointModel]
 }
+
+
+let exempleOfTrip = TripModel(startDate: Date(), endDate: Date(), distance: 2.3, average: 26, maxSpeed: 44.5, startLocal: "CEU", endLocal: "UTFPR",routePoints: [])
