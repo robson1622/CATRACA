@@ -6,6 +6,7 @@
 #include "TripData.h"
 #include "ui/actions.h"
 #include "TripInstructions.h"
+#include "BluetoothReceiver.h" // Include the BluetoothReceiver class
 
 #define STATIC_UI_MAX_INDEX 500 // Adjust this based on your static UI elements
 
@@ -45,6 +46,32 @@ SDInterface sd(SD_CS);
 #define RXD2 22 
 #define TXD2 27 
 GPS *gps = new GPS(Serial2);
+
+// Create an instance of BluetoothReceiver
+BluetoothReceiver bluetoothReceiver;
+
+void getBluetoothData() {
+  if (bluetoothReceiver.isComplete()) {
+    String response = bluetoothReceiver.getResponse();
+    Serial.println("Received JSON: " + response);
+
+    // Save the received JSON to trip.json on the SD card
+    File file = SD.open("/trip.json", FILE_WRITE);
+    if (file) {
+      file.print(response);
+      file.close();
+      Serial.println("Data saved to trip.json");
+      lv_obj_clear_flag(objects.go_to_trip_info_btn, LV_OBJ_FLAG_HIDDEN);
+      lv_obj_add_flag(objects.previous_route, LV_OBJ_FLAG_HIDDEN);
+      lv_obj_add_flag(objects.roda_ble, LV_OBJ_FLAG_HIDDEN);
+    } else {
+      Serial.println("Failed to open trip.json for writing");
+    }
+
+    // Clear the response for the next message
+    bluetoothReceiver.clearResponse();
+  }
+}
 
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p) {
   uint32_t w = (area->x2 - area->x1 + 1);
@@ -114,6 +141,9 @@ void setup() {
   Serial.println("SD Card initialized.");
 
   gps->begin(9600, RXD2, TXD2);
+
+  // Initialize BLE
+  bluetoothReceiver.setupBLE();
 }
 
 void cleanupHistoryPage() {
@@ -272,13 +302,18 @@ void loop() {
       lv_scr_load(objects.trips_log_screen);
     } else if(obj == objects.new_route_btn) {
       lv_scr_load(objects.new_route);
+      getBluetoothData();
+      if (bluetoothReceiver.isComplete()) {
+        lv_obj_clear_flag(objects.go_to_trip_info_btn, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(objects.roda_ble, LV_OBJ_FLAG_HIDDEN);
+      }
     } else if(obj == objects.new_route_back_main) {
       lv_scr_load(objects.main);
     } else if(obj == objects.go_to_trip_info_btn){
       lv_scr_load(objects.trips_info_page);
     } else if(obj == objects.go_back_new_route){
       lv_scr_load(objects.new_route);
-    } else if(obj == objects.go_to_trip_btn){
+    } else if(obj == objects.go_to_trip_btn || obj == objects.previous_route){
       lv_scr_load(objects.instructions_screen);
     } else if(obj == objects.cancel_trip){
       lv_scr_load(objects.main);
