@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9778450D2CD58C11002A11C8 /* Mapbox in Frameworks */ = {isa = PBXBuildFile; productRef = 9778450C2CD58C11002A11C8 /* Mapbox */; };
+		977AF34D2D32B4820074D3D4 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 977AF34C2D32B4820074D3D4 /* FirebaseAnalytics */; };
+		977AF34F2D32B4820074D3D4 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 977AF34E2D32B4820074D3D4 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +36,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		9778450F2CD59040002A11C8 /* Exceptions for "Ctraca" folder in "Ctraca" target */ = {
+		97B1EAD52D3A979C00830028 /* Exceptions for "Ctraca" folder in "Ctraca" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -47,7 +49,7 @@
 		977844B62CD27E6C002A11C8 /* Ctraca */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				9778450F2CD59040002A11C8 /* Exceptions for "Ctraca" folder in "Ctraca" target */,
+				97B1EAD52D3A979C00830028 /* Exceptions for "Ctraca" folder in "Ctraca" target */,
 			);
 			path = Ctraca;
 			sourceTree = "<group>";
@@ -69,7 +71,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				977AF34D2D32B4820074D3D4 /* FirebaseAnalytics in Frameworks */,
 				9778450D2CD58C11002A11C8 /* Mapbox in Frameworks */,
+				977AF34F2D32B4820074D3D4 /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +135,8 @@
 			name = Ctraca;
 			packageProductDependencies = (
 				9778450C2CD58C11002A11C8 /* Mapbox */,
+				977AF34C2D32B4820074D3D4 /* FirebaseAnalytics */,
+				977AF34E2D32B4820074D3D4 /* FirebaseFirestore */,
 			);
 			productName = Ctraca;
 			productReference = 977844B42CD27E6C002A11C8 /* Ctraca.app */;
@@ -216,6 +222,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				977844ED2CD46868002A11C8 /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */,
+				977AF34B2D32B4820074D3D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 977844B52CD27E6C002A11C8 /* Products */;
@@ -424,19 +431,26 @@
 				INFOPLIST_FILE = Ctraca/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Catraca;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Este aplicativo usa Bluetooth para conectar aos dispositivos próximos.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Este aplicativo usa Bluetooth para se comunicar com dispositivos externos.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Permita a localização para facilitar a navegação no aplicativo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5;
-				PRODUCT_BUNDLE_IDENTIFIER = "Robson-Corp..Ctraca";
+				PRODUCT_BUNDLE_IDENTIFIER = catraca.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -457,19 +471,26 @@
 				INFOPLIST_FILE = Ctraca/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Catraca;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Este aplicativo usa Bluetooth para conectar aos dispositivos próximos.";
+				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Este aplicativo usa Bluetooth para se comunicar com dispositivos externos.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Permita a localização para facilitar a navegação no aplicativo";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.5;
-				PRODUCT_BUNDLE_IDENTIFIER = "Robson-Corp..Ctraca";
+				PRODUCT_BUNDLE_IDENTIFIER = catraca.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -598,6 +619,14 @@
 				minimumVersion = 5.11.0;
 			};
 		};
+		977AF34B2D32B4820074D3D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -605,6 +634,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 977844ED2CD46868002A11C8 /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */;
 			productName = Mapbox;
+		};
+		977AF34C2D32B4820074D3D4 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 977AF34B2D32B4820074D3D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		977AF34E2D32B4820074D3D4 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 977AF34B2D32B4820074D3D4 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

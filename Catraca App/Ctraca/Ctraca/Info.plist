@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Grant bluetooth access so that you can connect to your bike&apos;s navigator.</string>
+	<key>MapTilerKey</key>
+	<string>il1k1RM1EEUeZlmcTrdH</string>
+</dict>
+</plist>
