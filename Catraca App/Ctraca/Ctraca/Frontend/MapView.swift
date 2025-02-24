@@ -61,6 +61,9 @@ struct MapView: UIViewRepresentable {
     func removePoints(){
         coordinator?.removeStartAndEndPoints()
     }
+    func updateMarkers(start: CLLocationCoordinate2D?, end: CLLocationCoordinate2D?) {
+        coordinator?.updateMarkers(start: start, end: end)
+    }
     final class Coordinator: NSObject, MGLMapViewDelegate {
         var control: MapView
         @Binding var startPoint: CLLocationCoordinate2D?
@@ -101,7 +104,28 @@ struct MapView: UIViewRepresentable {
 
             return annotationView
         }
+        func updateMarkers(start: CLLocationCoordinate2D?, end: CLLocationCoordinate2D?) {
+            guard let mapView = self.mapView else { return }
 
+            // Remove marcadores antigos
+            removeStartAndEndPoints()
+
+            // Adiciona novos marcadores
+            if let start = start {
+                addMarker(at: start, on: mapView, title: "Out")
+            }
+            if let end = end {
+                addMarker(at: end, on: mapView, title: "Finish")
+            }
+
+            // Força a atualização do mapa (opcional)
+            mapView.setNeedsDisplay()
+        }
+        
+        func mapView(_ mapView: MGLMapView, strokeColorForShapeAnnotation annotation: MGLShape) -> UIColor {
+            // Retorna a cor desejada para a linha
+            return UIColor(Color.verde) // Por exemplo, azul
+        }
 
         @objc func handleMapTap(_ gesture: UITapGestureRecognizer) {
             guard let mapView = gesture.view as? MGLMapView else { return }
@@ -130,10 +154,9 @@ struct MapView: UIViewRepresentable {
         }
         func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
             self.mapView = mapView
-            print("Mapa carregado com sucesso.")
-            
             // Se você precisar desenhar rotas imediatamente após carregar o mapa
             if let start = startPoint, let end = endPoint {
+                updateMarkers(start: start, end: end)
                 let routePoints = [start, end] // Exemplo simples; aqui você pode adicionar a lógica da rota
                 drawRoute(with: routePoints)
             }
@@ -166,28 +189,21 @@ struct MapView: UIViewRepresentable {
             mapView.addAnnotation(polyline)        }
 
         func removeStartAndEndPoints() {
-            guard let mapView = self.mapView else {
-                print("MapView não está inicializado.")
-                return
-            }
+            guard let mapView = self.mapView else { return }
 
-            // Filtra os pontos de início e fim pelo título
+            // Remove os marcadores de saída e chegada
             let annotationsToRemove = mapView.annotations?.filter { annotation in
                 guard let pointAnnotation = annotation as? MGLPointAnnotation else {
                     return false
                 }
                 return pointAnnotation.title == "Out" || pointAnnotation.title == "Finish"
             }
-            
-            // Remove as anotações filtradas
+
             if let annotations = annotationsToRemove {
                 mapView.removeAnnotations(annotations)
             }
-
-            // Limpa as variáveis de controle
-            startPoint = nil
-            endPoint = nil
         }
+
 
     }
 

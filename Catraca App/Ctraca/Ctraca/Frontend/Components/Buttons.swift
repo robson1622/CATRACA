@@ -105,7 +105,7 @@ struct StandardButton : View{
                 Spacer()
             }
             .padding()
-            .background( disabled ? .gray.opacity(0.3) : color.opacity(0.3))
+            .background( disabled ? .gray.opacity(0.3) : color.opacity(0.2))
             .cornerRadius(16)
         }
     }

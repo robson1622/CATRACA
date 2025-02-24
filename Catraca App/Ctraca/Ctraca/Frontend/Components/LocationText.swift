@@ -12,7 +12,9 @@ struct LocationText: View {
         case start,end,calendar
     }
     let type : types
-    let location : String
+    let editMode : Bool
+    var placehold : String = "Type anything"
+    @Binding var location : String
     var body: some View {
         HStack{
             Image(systemName: self.getSymbol())
@@ -20,14 +22,15 @@ struct LocationText: View {
                 .foregroundStyle(Color.verde)
                 .padding(4)
                 .rotationEffect( type != .calendar ? .degrees(90) : .degrees(0))
-            Text(location)
+            TextField(placehold, text: $location)
                 .font(.headline)
-                .foregroundStyle(Color.white)
+                .foregroundStyle(Color.preto2)
                 .multilineTextAlignment(.leading)
+                
             Spacer()
         }
         .padding(8)
-        .background(Color.preto3)
+        .background(Color.branco2)
         .cornerRadius(16)
     }
     
@@ -44,5 +47,5 @@ struct LocationText: View {
 }
 
 #Preview {
-    LocationText(type: .start,location: "Universidade Tecnológica Federal do Paraná")
+    LocationText(type: .start,editMode: true,location: .constant("Universidade Tecnológica Federal do Paraná"))
 }

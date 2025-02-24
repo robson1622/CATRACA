@@ -11,51 +11,44 @@ struct InformationsOfTripView: View {
     let catracaIsConnected : Bool
     @State var nextView : Bool = false
     @Binding var route : RouteModel?
+    @Binding var directions : DirectionsModel?
     var trip : TripModel?
     var body: some View {
         VStack{
             if nextView{
-                ConnectBluetoothView(route: $route,showTab: $nextView,offlineMapData: URL(filePath: "https://teste.com.br")!, connected: false, showAlert: false)
+                ConnectBluetoothView(route: $route,directions: $directions,showTab: $nextView,offlineMapData: URL(filePath: "https://teste.com.br")!, connected: false, showAlert: false)
             }
             else{
-                Text( trip == nil ? "Informations of Trip" : "Trip")
-                    .font(.title2)
-                    .bold()
+                TextModelsViews(text: trip == nil ? "Informations of Trip" : "Trip", fontType: .largeTextBold)
                     .padding(24)
-                    .foregroundStyle(Color.branco)
-                
-                ScrollView{
-                    locations
-                    
-                    metrics
-                    
-                }
+                locations
+                metrics
                 Spacer()
                 buttons
                     .padding(.bottom,60)
-                
             }
         }
         .padding(24)
         .frame(maxWidth: .infinity,maxHeight: .infinity)
-        .background(Color.preto2)
+        .background(Color.branco)
+        .onAppear(){
+            if let route = route{
+                outLocalString = route.out.local
+                finishLocalString = route.finish.local
+        }
+        }
     }
+    @State var outLocalString : String = ""
+    @State var finishLocalString : String = ""
     var locations : some View{
         VStack{
             HStack{
-                Text("LOCATIONS")
-                    .font(.headline)
-                    .foregroundStyle(Color.branco3)
+                TextModelsViews(text: "LOCATIONS", fontType: .divider)
                 Spacer()
             }
-            if let route = route {
-                LocationText(type:.start, location: "\(route.out.local)" )
-                LocationText(type:.end, location: "\(route.finish.local)" )
-            }
-            else if let trip = trip {
-                LocationText(type:.start, location: "\(trip.startLocal)" )
-                LocationText(type:.end, location: "\(trip.endLocal)" )
-                LocationText(type:.calendar, location: "\(self.formatEndDate()!)" )
+            if route != nil {
+                LocationText(type:.start,editMode:true, location: $outLocalString)
+                LocationText(type:.end,editMode:true ,location: $finishLocalString)
             }
         }
     }
@@ -63,23 +56,21 @@ struct InformationsOfTripView: View {
     var metrics : some View{
         VStack{
             HStack{
-                Text("METRICS")
-                    .font(.headline)
-                    .foregroundStyle(Color.branco3)
+                TextModelsViews(text: "METRICS", fontType: .divider)
                 Spacer()
             }
             .padding(.top,16)
             
             VStack{
                 if let trip = trip{
-                    MetricsCard(primary: true, title: "ESTIMATED TIME", value: "\(self.calculateDurationString() ?? "WITHOUT END DATE")", style: .time)
-                    MetricsCard(primary: false, title: "DISTANCE", value: "\(trip.distance) km", style: .distance)
-                    MetricsCard(primary: false, title: "AVERAGE", value: "\(trip.average) km/h", style: .average)
+                    MetricsCard(primary: true, title: "ESTIMATED TIME", value: "\(self.calculateDurationString() ?? "WITHOUT DATE")", style: .time)
+                    MetricsCard(primary: false, title: "DISTANCE", value: "\(trip.distance / 1000) km", style: .distance)
+                    MetricsCard(primary: false, title: "AVERAGE", value: "\(trip.averageSpeed()) km/h", style: .average)
                     MetricsCard(primary: false, title: "MAX SPEED", value: "\(trip.maxSpeed) km/h", style: .maxspeed)
                 }
                 else if let route = route{
                     MetricsCard(primary: true, title: "ESTIMATED TIME", value: "\(route.duration.toHMS())", style: .time)
-                    MetricsCard(primary: true, title: "DISTANCE", value: "\(route.distance) m", style: .distance)
+                    MetricsCard(primary: false, title: "DISTANCE", value: "\(String(format: "%.0f",route.distance)) m", style: .distance)
                 }
             }
         }
@@ -89,8 +80,12 @@ struct InformationsOfTripView: View {
         VStack{
             if let _ = route{
                 ConnectButton(text: "Connect with CATRACA", onTap: {
+                    route?.out.local = outLocalString
+                    route?.finish.local = finishLocalString
+                    route?.out.local = outLocalString
+                    route?.finish.local = finishLocalString
                     nextView = true
-                })
+                },disabled: outLocalString.isEmpty  || finishLocalString.isEmpty)
             }
         }
         .padding(.top,24)
@@ -140,5 +135,5 @@ struct InformationsOfTripView: View {
 }
 
 #Preview {
-    InformationsOfTripView(catracaIsConnected: false ,route:.constant(exempleOfRoute), trip: exempleOfTrip)
+    InformationsOfTripView(catracaIsConnected: false ,route:.constant(exempleOfRoute),directions:.constant(exampleDirections), trip: exempleOfTrip)
 }

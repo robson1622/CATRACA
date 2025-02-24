@@ -40,7 +40,7 @@ struct AlertView: View {
                 }
                 
                 // Aguarda 4 segundos e, em seguida, anima para desaparecer
-                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                     withAnimation(.spring()) {
                         scale = 0
                     }
@@ -57,5 +57,5 @@ struct AlertView: View {
 
 
 #Preview {
-    AlertView(show:.constant(true),text:"Erro ao tentar amolecer pau via google assitence",success: false)
+    AlertView(show:.constant(true),text:"Erro ao tentar amolecer pau via google assitence",success: true)
 }

@@ -72,10 +72,50 @@ struct RouteModel : Codable{
         
         return jsonData
     }
+    
+
+}
+
+// Função para calcular a distância entre dois pontos usando a fórmula de Haversine
+func haversineDistance(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) -> Double {
+    let earthRadius = 6371000.0 // Raio da Terra em metros
+
+    let lat1 = from.latitude.degreesToRadians
+    let lon1 = from.longitude.degreesToRadians
+    let lat2 = to.latitude.degreesToRadians
+    let lon2 = to.longitude.degreesToRadians
+
+    let dLat = lat2 - lat1
+    let dLon = lon2 - lon1
+
+    let a = sin(dLat / 2) * sin(dLat / 2) +
+            cos(lat1) * cos(lat2) *
+            sin(dLon / 2) * sin(dLon / 2)
+
+    let c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    return earthRadius * c
+}
+
+func calculateTotalDistance(points : [PointModel]) -> Double {
+    var totalDistance: Double = 0.0
+    if points.count >= 1{
+        for i in 0..<(points.count - 1) {
+            let currentPoint = points[i]
+            let nextPoint = points[i + 1]
+            
+            let currentLocation = CLLocationCoordinate2D(latitude: currentPoint.latitude, longitude: currentPoint.longitude)
+            let nextLocation = CLLocationCoordinate2D(latitude: nextPoint.latitude, longitude: nextPoint.longitude)
+            
+            let distance = haversineDistance(from: currentLocation, to: nextLocation)
+            totalDistance += distance
+        }
+    }
+    return totalDistance
 }
 
 
-let exempleOfRoute = RouteModel(id: "1", out: exempleLocation, finish: exempleLocation, date: Date(), listOfPoints: [],distance: 1252.3,duration: 123456)
+let exempleOfRoute = RouteModel(id: "1",  out: exempleLocation, finish: exempleLocation, date: Date(), listOfPoints: [],distance: 1252.3,duration: 123456)
 
 
 func fetchGoogleRoutes(apiKey: String = ApiKey,
@@ -166,9 +206,6 @@ func fetchGoogleRoutes(apiKey: String = ApiKey,
             return
         }
         // Depuração da resposta do servidor
-        if let responseString = String(data: data, encoding: .utf8) {
-            print("Resposta do servidor: \(responseString)")
-        }
         do {
             let decodedResponse = try JSONDecoder().decode(RouteResponse.self, from: data)
 
@@ -230,4 +267,11 @@ func decodePolyline(_ polyline: String) -> [CLLocationCoordinate2D] {
     }
 
     return coordinates
+}
+
+// Extensão para converter graus em radianos
+extension Double {
+    var degreesToRadians: Double {
+        return self * .pi / 180
+    }
 }

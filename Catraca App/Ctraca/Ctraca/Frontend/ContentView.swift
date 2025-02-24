@@ -24,6 +24,7 @@ struct ContentView: View {
     
     @State var location : LocationModel? = nil
     @State var route : RouteModel? = nil
+    @State var directions : DirectionsModel? = nil
     @State var routePoints : [CLLocationCoordinate2D] = []
     @State var searchTextDestination : String = ""
     @State var searchTextMyPosition : String = ""
@@ -31,6 +32,8 @@ struct ContentView: View {
     @State var statusOfLoading : StatesOfLoad = .idle
     @State var showLoading : Bool = true
     
+    @State var awaitResponse : Bool = false
+    @State var routeAndDirectionsHasUpdated : Bool = false
     var body: some View {
         VStack{
             if showLoading{
@@ -38,107 +41,42 @@ struct ContentView: View {
             }
             else{
                 ZStack {
+                    
                     if let mapView = map {
                         mapView
                             .edgesIgnoringSafeArea(.all)
                     }
                     
                     if menuState == .logOfTrips {
-                        
+                        LogOfTripsView(route: $route,direction: $directions,makeThisRouteAgain: $routeAndDirectionsHasUpdated )
                     }
                     else if menuState == .newTrip {
-                        InformationsOfTripView(catracaIsConnected: false, route: $route, trip: nil)
+                        InformationsOfTripView(catracaIsConnected: false, route: $route,directions: $directions, trip: nil)
                     }
                     
                     VStack {
                         Spacer()
                         menu
-                            .padding(.top, 20)
+                            .padding(.top, 30)
                             .shadow(radius: 10)
+                            .padding(.bottom,10)
                     }
-                    .padding(16)
-                    
-                    
-                    //            VStack {
-                    //                Spacer()
-                    //                Button(action:{
-                    ////                    self.showBluetoothConnect = true
-                    //                }){
-                    //                    Text("Search device")
-                    //                        .padding()
-                    //                        .background(Color.verde)
-                    //                }
-                    //                Button(action:{
-                    //                    Task{
-                    //                        offlineMapData = try await map?.downloadOfflineMap()
-                    //                        print("\n Arquivo ZIP criado em: \(offlineMapData) \n")
-                    //                    }
-                    //                }){
-                    //                    Text("Download map")
-                    //                        .padding()
-                    //                        .background(Color.verde)
-                    //                }
-                    //                Button(action:{
-                    //                    Task{
-                    //                        if let offlineMapData = offlineMapData {
-                    //                            if FileManager.default.fileExists(atPath: offlineMapData.path) {
-                    //                                do {
-                    //                                    let zipData = try Data(contentsOf: offlineMapData)
-                    //                                    bluetoothManager.dataToSend = zipData
-                    //                                    print("Arquivo ZIP carregado com sucesso para envio.")
-                    //                                } catch {
-                    //                                    print("Erro ao carregar o conteúdo do arquivo ZIP: \(error.localizedDescription)")
-                    //                                }
-                    //                            } else {
-                    //                                print("Arquivo ZIP não encontrado no caminho: \(offlineMapData.path)")
-                    //                            }
-                    //
-                    //                        }
-                    //                    }
-                    //                }){
-                    //                    Text("Send map")
-                    //                        .padding()
-                    //                        .background(Color.verde)
-                    //                }
-                    //                Button(action: {
-                    //                    // Ação do botão
-                    //                    // testar download do mapa
-                    //
-                    //
-                    //                }) {
-                    //                    ZStack{
-                    //                        Circle()
-                    //                            .frame(width: 75)
-                    //                            .foregroundStyle(Color.preto2)
-                    //                        Image(systemName: "location.circle.fill")
-                    //                            .resizable()
-                    //                            .frame(width: 80, height: 80)
-                    //                            .foregroundStyle(Color.verde)
-                    //                            .rotationEffect(.degrees(rotationAngle))
-                    //                            .onAppear {
-                    //                                withAnimation(Animation.linear(duration: 60).repeatForever(autoreverses: false)) {
-                    //                                    rotationAngle = 360 // Gira 360 graus continuamente
-                    //                                }
-                    //                            }
-                    //                        Circle()
-                    //                            .frame(width: 20)
-                    //                            .foregroundStyle(Color.preto2)
-                    //                            .padding(.bottom, 60)
-                    //                            .padding(.leading, 60)
-                    //                        Image(systemName: "plus.circle.fill")
-                    //                            .resizable()
-                    //                            .frame(width: 20, height: 20)
-                    //                            .foregroundStyle(Color.white)
-                    //                            .padding(.bottom, 60)
-                    //                            .padding(.leading, 60)
-                    //                    }
-                    //                    .shadow(radius: 10)
-                    //                }
-                    //                .padding(36)
-                    //            }
-                    //            BluetoothDeviceListView(connected:$connected,bluetoothManager: bluetoothManager)
-                    //                    .padding(.horizontal,52)
-                    //
+                    if awaitResponse{
+                        VStack{
+                            Text("Searching for \n travel route...")
+                                .font(.title2)
+                                .foregroundStyle(Color.black)
+                                .padding()
+                            SpinningCatraca()
+                                .padding()
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: 300)
+                        .background(Color.branco)
+                        .shadow(radius: 10)
+                        .cornerRadius(16)
+                        .padding(60)
+                            
+                    }
                     
                 }
             }
@@ -148,6 +86,21 @@ struct ContentView: View {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2){
                 withAnimation{
                     showLoading = false
+                }
+            }
+        }
+        .onChange(of: routeAndDirectionsHasUpdated){ newValue in
+            if newValue{
+                routePoints.removeAll()
+                if let route = route{
+                    for i in 0..<route.listOfPoints.count{
+                        routePoints.append(route.listOfPoints[i].toCLLocationCoordinate2D())
+                    }
+                    startPoint = route.out.position?.toCLLocationCoordinate2D()
+                    endPoint = route.finish.position?.toCLLocationCoordinate2D()
+                    map?.removePoints()
+                    map?.updateMarkers(start: startPoint, end: endPoint)
+                    menuState = .none
                 }
             }
         }
@@ -166,31 +119,25 @@ struct ContentView: View {
         VStack{
             if startPoint != nil && endPoint != nil && menuState == .none{
                 Button(action:{
-                    let testOfDirections = false
-                    let start = LocationModel(local: "Start test",position: startPoint!)
-                    let end = LocationModel(local: "End test",position:endPoint!)
-                    if testOfDirections{
-                        if let origin = startPoint, let destination = endPoint{
-                            fetchDirections(from: origin, to: destination){ response in
-                                print(response)
-                            }
-                        }
-                    }
-                    else if startPoint != nil && endPoint != nil{
-                        route = RouteModel(id: UUID().uuidString, out: start, finish: end, date: Date(), listOfPoints: [], distance: 0.00, duration: 0)
+                    let start = LocationModel(local: "",position: startPoint!)
+                    let end = LocationModel(local: "",position:endPoint!)
+                    awaitResponse = true
+                    if startPoint != nil && endPoint != nil{
+                        
                         if let origin = startPoint, let destination = endPoint{
                             fetchGoogleRoutes( origin: origin, destination: destination){ response in
                                 switch response {
                                 case .success(let paths):
-                                    DispatchQueue.main.async {
-                                        // Atualiza a variável no thread principal, se necessário
+                                    DispatchQueue.main.async{
+                                        var listOfPoints : [PointModel] = []
                                         for path in paths{
-                                            route?.listOfPoints.append(PointModel(position: path))
+                                            listOfPoints.append(PointModel(position: path))
                                         }
-                                        
-                                        //map?.makeCoordinator().drawRoute(with: paths)
+                                        let distance = calculateTotalDistance(points: listOfPoints)
+                                        let duration = Int((distance) / 5)
+                                        var safeRoute = RouteModel(id: UUID().uuidString, out: start, finish: end, date: Date(), listOfPoints: listOfPoints, distance: distance, duration: duration)
                                         routePoints = paths
-                                        map?.numberOfPoints = 0
+                                        route = safeRoute
                                     }
                                 case .failure(let error):
                                     DispatchQueue.main.async {
@@ -199,6 +146,18 @@ struct ContentView: View {
                                     }
                                 }
                             }
+                            fetchDirections(from: origin, to: destination){ response in
+                                switch response {
+                                case .success(let infor):
+                                    DispatchQueue.main.sync{
+                                        directions = infor
+                                        awaitResponse = false
+                                    }
+                                case .failure(let error):
+                                    print(error)
+                                }
+                                
+                            }
                         }
                         
                     }
@@ -206,9 +165,9 @@ struct ContentView: View {
                     Image(systemName: "point.bottomleft.forward.to.arrow.triangle.scurvepath.fill")
                         .font(.title2)
                         .bold()
-                        .foregroundStyle(.verde)
+                        .foregroundStyle(.branco)
                         .frame(width:48,height: 48)
-                        .background(Color.preto2)
+                        .background(Color.verde2)
                         .cornerRadius(16)
                 }
             }
@@ -224,12 +183,12 @@ struct ContentView: View {
                     Image(systemName: "list.clipboard.fill")
                         .font(.title2)
                         .bold()
-                        .foregroundStyle(menuState == .logOfTrips ? Color.preto2 : Color.branco)
+                        .foregroundStyle(menuState == .logOfTrips ? Color.branco : Color.branco2)
                         .frame(width:48,height: 48)
-                        .background(menuState == .logOfTrips ? Color.verde : Color.preto2)
+                        .background(menuState == .logOfTrips ? Color.verde : Color.preto3)
                         .cornerRadius(16)
                 }
-                if startPoint != nil && endPoint != nil{
+                if startPoint != nil && endPoint != nil && route != nil && directions != nil{
                     Button(action: {
                         if menuState == .newTrip{
                             menuState = .none
@@ -242,18 +201,17 @@ struct ContentView: View {
                         Image(systemName: "location.circle.fill")
                             .font(.title2)
                             .bold()
-                            .foregroundStyle(menuState == .newTrip ? Color.preto2 : Color.branco)
+                            .foregroundStyle(menuState == .newTrip ? Color.branco : Color.branco2)
                             .frame(width:48,height: 48)
-                            .background(menuState == .newTrip ? Color.verde : Color.preto2)
+                            .background(menuState == .newTrip ? Color.verde : Color.preto3)
                             .cornerRadius(16)
                     }
                 }
                 
                 
             }
-            .padding(.horizontal,16)
-            .padding(.vertical, 8)
-            .background(Color.preto3)
+            .padding(8)
+            .background(Color.branco)
             .cornerRadius(16)
             
         }
@@ -275,7 +233,7 @@ struct ContentView: View {
             Spacer()
             
             if let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
-                let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+               let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
                 Text("Version: \(appVersion)")
                     .font(.subheadline)
                     .bold()
@@ -292,13 +250,13 @@ struct ContentView: View {
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity) // Ocupa toda a tela
-                .background(
-                    LinearGradient(
-                        gradient: Gradient(colors: [.verde, .verde2]), // Cores do degradê
-                        startPoint: .topLeading, // Início do degradê
-                        endPoint: .bottomTrailing // Fim do degradê
-                    )
-                )
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [.verde, .verde2]), // Cores do degradê
+                startPoint: .topLeading, // Início do degradê
+                endPoint: .bottomTrailing // Fim do degradê
+            )
+        )
         .edgesIgnoringSafeArea(.all)
     }
 }

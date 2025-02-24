@@ -38,7 +38,7 @@ struct MetricsCard: View {
                     Text(title)
                         .bold()
                         .font(.footnote)
-                        .foregroundStyle(primary ? Color.preto2 : Color.branco)
+                        .foregroundStyle(primary ? Color.preto2 : Color.preto3)
                         .padding(.bottom,-10)
                         
                     Spacer()
@@ -47,7 +47,7 @@ struct MetricsCard: View {
                     Text(value)
                         .font(.title2)
                         .fontWeight(.heavy)
-                        .foregroundStyle(primary ? Color.preto2 : Color.branco)
+                        .foregroundStyle(primary ? Color.preto2 : Color.preto3)
                     Spacer()
                 }
             }
