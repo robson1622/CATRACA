@@ -708,21 +708,8 @@ void create_screen_trip_details_screen() {
     {
         lv_obj_t *parent_obj = obj;
         {
-            lv_obj_t *obj = lv_obj_create(parent_obj);
-            objects.obj3 = obj;
-            lv_obj_set_pos(obj, 0, 0);
-            lv_obj_set_size(obj, 240, 320);
-            lv_obj_set_style_pad_left(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_pad_top(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_pad_right(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_pad_bottom(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_bg_opa(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            lv_obj_set_style_border_width(obj, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-            create_user_widget_header(obj, 52);
-        }
-        {
             lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 59, 24);
+            lv_obj_set_pos(obj, 59, 2);
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Travel Details");
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -731,7 +718,7 @@ void create_screen_trip_details_screen() {
             // back_to_log_button
             lv_obj_t *obj = lv_btn_create(parent_obj);
             objects.back_to_log_button = obj;
-            lv_obj_set_pos(obj, 10, 502);
+            lv_obj_set_pos(obj, 10, 480);
             lv_obj_set_size(obj, 220, 35);
             lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xffe84d4d), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -748,8 +735,8 @@ void create_screen_trip_details_screen() {
         }
         {
             lv_obj_t *obj = lv_btn_create(parent_obj);
-            objects.obj4 = obj;
-            lv_obj_set_pos(obj, 10, 458);
+            objects.obj3 = obj;
+            lv_obj_set_pos(obj, 10, 436);
             lv_obj_set_size(obj, 220, 35);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xffe84d4d), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
@@ -765,7 +752,7 @@ void create_screen_trip_details_screen() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            lv_obj_set_pos(obj, 10, 55);
+            lv_obj_set_pos(obj, 10, 33);
             lv_obj_set_size(obj, 220, 115);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
             {
@@ -788,7 +775,7 @@ void create_screen_trip_details_screen() {
                         lv_obj_t *parent_obj = obj;
                         {
                             lv_obj_t *obj = lv_btn_create(parent_obj);
-                            objects.obj5 = obj;
+                            objects.obj4 = obj;
                             lv_obj_set_pos(obj, -6, -5);
                             lv_obj_set_size(obj, 24, 26);
                             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -814,7 +801,7 @@ void create_screen_trip_details_screen() {
                         }
                         {
                             lv_obj_t *obj = lv_btn_create(parent_obj);
-                            objects.obj6 = obj;
+                            objects.obj5 = obj;
                             lv_obj_set_pos(obj, -6, 26);
                             lv_obj_set_size(obj, 24, 26);
                             lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -826,7 +813,7 @@ void create_screen_trip_details_screen() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            lv_obj_set_pos(obj, 10, 180);
+            lv_obj_set_pos(obj, 10, 158);
             lv_obj_set_size(obj, 220, 59);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
             {
@@ -848,7 +835,7 @@ void create_screen_trip_details_screen() {
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj7 = obj;
+                    objects.obj6 = obj;
                     lv_obj_set_pos(obj, -8, -6);
                     lv_obj_set_size(obj, 40, 40);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -858,7 +845,7 @@ void create_screen_trip_details_screen() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            lv_obj_set_pos(obj, 10, 248);
+            lv_obj_set_pos(obj, 10, 226);
             lv_obj_set_size(obj, 220, 59);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
             {
@@ -880,7 +867,7 @@ void create_screen_trip_details_screen() {
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj8 = obj;
+                    objects.obj7 = obj;
                     lv_obj_set_pos(obj, -8, -6);
                     lv_obj_set_size(obj, 40, 40);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -890,7 +877,7 @@ void create_screen_trip_details_screen() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            lv_obj_set_pos(obj, 10, 314);
+            lv_obj_set_pos(obj, 10, 292);
             lv_obj_set_size(obj, 220, 59);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
             {
@@ -912,7 +899,7 @@ void create_screen_trip_details_screen() {
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj9 = obj;
+                    objects.obj8 = obj;
                     lv_obj_set_pos(obj, -8, -6);
                     lv_obj_set_size(obj, 40, 40);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -922,7 +909,7 @@ void create_screen_trip_details_screen() {
         }
         {
             lv_obj_t *obj = lv_obj_create(parent_obj);
-            lv_obj_set_pos(obj, 10, 385);
+            lv_obj_set_pos(obj, 10, 363);
             lv_obj_set_size(obj, 220, 59);
             lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
             {
@@ -944,7 +931,7 @@ void create_screen_trip_details_screen() {
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj10 = obj;
+                    objects.obj9 = obj;
                     lv_obj_set_pos(obj, -8, -6);
                     lv_obj_set_size(obj, 40, 40);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -956,7 +943,6 @@ void create_screen_trip_details_screen() {
 }
 
 void tick_screen_trip_details_screen() {
-    tick_user_widget_header(52);
 }
 
 void create_screen_new_route() {
@@ -992,6 +978,7 @@ void create_screen_new_route() {
             lv_obj_set_pos(obj, 10, 237);
             lv_obj_set_size(obj, 220, 35);
             lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
+            lv_obj_add_flag(obj, LV_OBJ_FLAG_HIDDEN);
             lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
             {
                 lv_obj_t *parent_obj = obj;
@@ -1005,8 +992,9 @@ void create_screen_new_route() {
             }
         }
         {
+            // roda_ble
             lv_obj_t *obj = lv_spinner_create(parent_obj, 1000, 60);
-            objects.obj11 = obj;
+            objects.roda_ble = obj;
             lv_obj_set_pos(obj, 73, 101);
             lv_obj_set_size(obj, 94, 96);
             lv_obj_set_style_arc_color(obj, lv_color_hex(0xff39cb4f), LV_PART_INDICATOR | LV_STATE_DEFAULT);
@@ -1024,6 +1012,25 @@ void create_screen_new_route() {
             lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
             lv_label_set_text(obj, "Use the App to send a route\n     trought Bluetooth.");
             lv_obj_set_style_text_font(obj, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
+        }
+        {
+            // previous route
+            lv_obj_t *obj = lv_btn_create(parent_obj);
+            objects.previous_route = obj;
+            lv_obj_set_pos(obj, 10, 237);
+            lv_obj_set_size(obj, 220, 35);
+            lv_obj_add_event_cb(obj, action_button_action_handler, LV_EVENT_RELEASED, (void *)0);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xff39cb4f), LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, 0, 1);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text(obj, "Use the previous Route");
+                    lv_obj_set_style_align(obj, LV_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+                }
+            }
         }
     }
 }
@@ -1066,7 +1073,7 @@ void create_screen_trips_info_page() {
                 lv_obj_t *parent_obj = obj;
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj12 = obj;
+                    objects.obj10 = obj;
                     lv_obj_set_pos(obj, -6, -5);
                     lv_obj_set_size(obj, 30, 30);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);
@@ -1092,7 +1099,7 @@ void create_screen_trips_info_page() {
                 }
                 {
                     lv_obj_t *obj = lv_btn_create(parent_obj);
-                    objects.obj13 = obj;
+                    objects.obj11 = obj;
                     lv_obj_set_pos(obj, -6, 30);
                     lv_obj_set_size(obj, 30, 30);
                     lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE);

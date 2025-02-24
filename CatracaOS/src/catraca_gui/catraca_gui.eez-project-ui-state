@@ -1,7 +1,7 @@
 {
   "navigation": {
-    "selectedUserPageObject": "[catraca_gui.eez-project]:/userPages/7",
-    "selectedUserWidgetObject": "[catraca_gui.eez-project]:/userWidgets/0",
+    "selectedUserPageObject": "[catraca_gui.eez-project]:/userPages/4",
+    "selectedUserWidgetObject": "[catraca_gui.eez-project]:/userWidgets/1",
     "selectedActionObject": "[catraca_gui.eez-project]:/actions/0",
     "selectedBitmapObject": "[catraca_gui.eez-project]:/bitmaps/1",
     "subnavigationSelectedItems": {}
@@ -125,6 +125,7 @@
                   "type": "tabset",
                   "id": "#55b7552c-a2fb-45fd-a997-f415d8be3967",
                   "weight": 1.4006024096385539,
+                  "selected": 1,
                   "enableClose": false,
                   "children": [
                     {
@@ -191,17 +192,28 @@
               "type": "tabset",
               "id": "EDITORS",
               "weight": 50.241559338356346,
-              "selected": 2,
+              "selected": 1,
               "enableDeleteWhenEmpty": false,
               "enableClose": false,
               "children": [
                 {
                   "type": "tab",
-                  "id": "#0bff8ad6-d588-4782-bc16-9b4e890246cf",
-                  "name": "Main",
+                  "id": "#16dea5d8-69ec-4bdd-89f8-9a6ed768d0c5",
+                  "name": "trip_container",
                   "component": "editor",
                   "config": {
-                    "objectPath": "[catraca_gui.eez-project]:/userPages/0",
+                    "objectPath": "[catraca_gui.eez-project]:/userWidgets/1",
+                    "permanent": false
+                  },
+                  "icon": "svg:user_widget"
+                },
+                {
+                  "type": "tab",
+                  "id": "#0bff8ad6-d588-4782-bc16-9b4e890246cf",
+                  "name": "TripsLogScreen",
+                  "component": "editor",
+                  "config": {
+                    "objectPath": "[catraca_gui.eez-project]:/userPages/4",
                     "permanent": false
                   },
                   "icon": "svg:page"
@@ -1172,7 +1184,8 @@
       "selection": {
         "0": {
           "0": {},
-          "2": {}
+          "2": {},
+          "$selected": true
         }
       },
       "transform": {
@@ -1225,7 +1238,7 @@
       "transform": {
         "translate": {
           "x": -110,
-          "y": -814.7350000000001
+          "y": -314.7350000000001
         },
         "scale": 1.75
       },
